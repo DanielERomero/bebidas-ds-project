@@ -1,0 +1,501 @@
+client_id,business_name,store_type,zone,latitude,longitude,registration_date
+CLI-0001,Pollería El Centro,restaurante,Chilca,-12.082178,-75.200853,2021-10-14
+CLI-0002,Tienda Wanka,bodega,Chilca,-12.082362,-75.192667,2022-02-19
+CLI-0003,Tienda Santa Rosa,bodega,San Carlos,-12.053894,-75.227877,2022-04-13
+CLI-0004,Licores San Martín,licoreria,Chilca,-12.085464,-75.196285,2021-12-11
+CLI-0005,Tienda El Progreso,bodega,El Tambo,-12.043708,-75.208575,2021-03-07
+CLI-0006,Bodega La Esquina,bodega,Huancayo Cercado,-12.070342,-75.21252,2021-06-27
+CLI-0007,Pollería El Progreso,restaurante,El Tambo,-12.048514,-75.213371,2022-02-23
+CLI-0008,Mini Don José,minimarket,Huancayo Cercado,-12.069329,-75.207963,2022-03-15
+CLI-0009,Market Don José,minimarket,Chilca,-12.085959,-75.196411,2022-07-08
+CLI-0010,Minimarket Wanka,bodega,Huancayo Centro,-12.070149,-75.205905,2021-03-18
+CLI-0011,Bodega Santa Rosa,bodega,El Tambo,-12.046046,-75.216387,2022-06-20
+CLI-0012,Minimarket Mantaro,bodega,San Carlos,-12.053509,-75.224573,2021-08-11
+CLI-0013,Minimarket El Tambo,minimarket,El Tambo,-12.045928,-75.21363,2021-12-18
+CLI-0014,Tienda San Martín,bodega,Huancayo Centro,-12.066508,-75.204863,2021-01-13
+CLI-0015,Minimarket El Paraíso,bodega,Chilca,-12.08627,-75.195239,2021-11-27
+CLI-0016,Pollería El Paraíso,restaurante,Huancayo Centro,-12.067816,-75.206034,2025-01-16
+CLI-0017,Tienda El Sol,bodega,Chilca,-12.085616,-75.19785,2022-05-05
+CLI-0018,Bodega La Familia,bodega,Huancayo Centro,-12.066882,-75.209238,2021-09-06
+CLI-0019,Minimarket La Familia,minimarket,Chilca,-12.080195,-75.195718,2021-12-09
+CLI-0020,Bodega La Económica,bodega,Huancayo Centro,-12.064029,-75.20051,2021-08-15
+CLI-0021,Bodega San Martín,bodega,Huancayo Centro,-12.06923,-75.202995,2025-02-23
+CLI-0022,Minimarket Los Olivos,bodega,El Tambo,-12.03901,-75.206258,2023-11-15
+CLI-0023,Minimarket Santa Rosa,bodega,El Tambo,-12.047439,-75.216246,2022-04-09
+CLI-0024,Minimarket Mantaro,bodega,San Carlos,-12.058107,-75.230024,2025-01-04
+CLI-0025,Mini El Paraíso,minimarket,Huancayo Cercado,-12.069609,-75.207052,2022-11-04
+CLI-0026,Tienda El Tambo,bodega,Huancayo Centro,-12.067564,-75.202385,2021-05-06
+CLI-0027,Bodega El Ahorro,bodega,San Carlos,-12.055122,-75.226964,2021-04-09
+CLI-0028,Restaurant Santa Isabel,restaurante,El Tambo,-12.040263,-75.21452,2025-01-09
+CLI-0029,Minimarket El Centro,minimarket,El Tambo,-12.046233,-75.211681,2022-04-29
+CLI-0030,Tienda San Martín,bodega,Huancayo Cercado,-12.065047,-75.204829,2025-05-15
+CLI-0031,Pollería El Tambo,restaurante,Huancayo Centro,-12.060884,-75.207584,2022-06-28
+CLI-0032,Bodega Mantaro,bodega,El Tambo,-12.040778,-75.214728,2022-06-14
+CLI-0033,Mini Don José,minimarket,Huancayo Centro,-12.068756,-75.207534,2022-04-17
+CLI-0034,Tienda El Tambo,bodega,Chilca,-12.083534,-75.196453,2022-01-25
+CLI-0035,Licorería La Económica,licoreria,El Tambo,-12.045464,-75.217088,2022-07-01
+CLI-0036,Bodega La Económica,bodega,El Tambo,-12.044315,-75.207448,2021-10-30
+CLI-0037,Bodega Santa Rosa,bodega,San Carlos,-12.056772,-75.224053,2022-12-27
+CLI-0038,Bodega Los Andes,bodega,Chilca,-12.088187,-75.196588,2022-03-29
+CLI-0039,Restaurant El Paraíso,restaurante,El Tambo,-12.049401,-75.208612,2021-10-21
+CLI-0040,Bodega El Buen Precio,bodega,Chilca,-12.086105,-75.193975,2022-02-11
+CLI-0041,Licorería Virgen de Cocharcas,licoreria,Huancayo Cercado,-12.068696,-75.211128,2021-11-11
+CLI-0042,Minimarket Mantaro,bodega,Huancayo Centro,-12.066766,-75.203485,2021-01-21
+CLI-0043,Bodega Virgen de Cocharcas,bodega,Huancayo Cercado,-12.07,-75.212165,2021-10-20
+CLI-0044,Bodega Los Andes,bodega,Huancayo Centro,-12.063942,-75.207189,2021-04-09
+CLI-0045,Restaurant El Buen Precio,restaurante,El Tambo,-12.044212,-75.21356,2022-01-11
+CLI-0046,Cevichería La Familia,restaurante,San Carlos,-12.054209,-75.224843,2025-06-01
+CLI-0047,Minimarket Mantaro,bodega,Huancayo Centro,-12.060686,-75.2126,2022-03-04
+CLI-0048,Minimarket Los Andes,bodega,Huancayo Cercado,-12.069016,-75.204818,2021-12-15
+CLI-0049,Tienda Mantaro,bodega,Huancayo Cercado,-12.073159,-75.211003,2022-03-09
+CLI-0050,Bodega El Buen Precio,bodega,El Tambo,-12.039768,-75.213683,2022-05-15
+CLI-0051,Tienda El Ahorro,bodega,El Tambo,-12.042031,-75.218535,2021-11-22
+CLI-0052,Minimarket Los Olivos,bodega,Huancayo Centro,-12.059638,-75.202708,2022-04-15
+CLI-0053,Pollería Los Olivos,restaurante,Huancayo Centro,-12.060566,-75.202987,2025-06-29
+CLI-0054,Bodega La Económica,bodega,Huancayo Cercado,-12.069064,-75.206534,2023-11-01
+CLI-0055,Market El Sol,minimarket,El Tambo,-12.043758,-75.210151,2021-05-09
+CLI-0056,Tienda La Familia,bodega,Huancayo Centro,-12.063995,-75.20236,2021-06-17
+CLI-0057,Menú El Ahorro,restaurante,El Tambo,-12.044297,-75.214189,2022-03-10
+CLI-0058,Licorería El Centro,licoreria,Huancayo Centro,-12.068276,-75.205275,2021-02-26
+CLI-0059,Mini Don José,minimarket,El Tambo,-12.042467,-75.214966,2025-04-28
+CLI-0060,Menú La Económica,restaurante,San Carlos,-12.055615,-75.231011,2021-05-10
+CLI-0061,Minimarket El Tambo,bodega,Chilca,-12.089807,-75.198755,2021-06-24
+CLI-0062,Minimarket Santa Isabel,minimarket,Huancayo Cercado,-12.074238,-75.21693,2025-03-21
+CLI-0063,Tienda Santa Isabel,bodega,Huancayo Cercado,-12.069585,-75.20772,2025-05-03
+CLI-0064,Minimarket Mantaro,minimarket,Huancayo Cercado,-12.067538,-75.211181,2021-01-16
+CLI-0065,Bodega Santa Rosa,bodega,Huancayo Centro,-12.071079,-75.208789,2021-06-23
+CLI-0066,Licores El Buen Precio,licoreria,Huancayo Centro,-12.064507,-75.201632,2023-07-19
+CLI-0067,Minimarket Doña María,bodega,Huancayo Centro,-12.065394,-75.200839,2021-10-26
+CLI-0068,Minimarket El Paraíso,bodega,Huancayo Centro,-12.066174,-75.202489,2022-04-09
+CLI-0069,Mini El Progreso,minimarket,El Tambo,-12.043576,-75.215393,2021-03-24
+CLI-0070,Licorería Wanka,licoreria,Huancayo Centro,-12.067063,-75.203616,2021-04-05
+CLI-0071,Licores Santa Rosa,licoreria,El Tambo,-12.046028,-75.219431,2021-10-20
+CLI-0072,Bodega El Sol,bodega,San Carlos,-12.053954,-75.219147,2021-04-27
+CLI-0073,Minimarket El Paraíso,bodega,Huancayo Centro,-12.067637,-75.203901,2021-08-07
+CLI-0074,Bodega El Progreso,bodega,Huancayo Cercado,-12.073352,-75.211376,2021-08-13
+CLI-0075,Minimarket La Económica,bodega,El Tambo,-12.043957,-75.216221,2021-10-26
+CLI-0076,Minimarket Los Andes,bodega,Huancayo Cercado,-12.073426,-75.209981,2022-12-15
+CLI-0077,Cevichería Santa Rosa,restaurante,El Tambo,-12.043258,-75.21517,2023-03-14
+CLI-0078,Tienda El Buen Precio,bodega,Huancayo Cercado,-12.068163,-75.208003,2025-05-24
+CLI-0079,Tienda Los Olivos,bodega,Huancayo Centro,-12.066026,-75.202093,2021-02-06
+CLI-0080,Tienda El Sol,bodega,San Carlos,-12.052314,-75.227158,2021-01-17
+CLI-0081,Licores El Sol,licoreria,Huancayo Cercado,-12.068695,-75.211679,2025-05-19
+CLI-0082,Minimarket San Martín,bodega,Huancayo Cercado,-12.067628,-75.208966,2023-02-11
+CLI-0083,Licores Mantaro,licoreria,Huancayo Centro,-12.06801,-75.207563,2023-05-27
+CLI-0084,Minimarket Virgen de Cocharcas,bodega,El Tambo,-12.044606,-75.214225,2021-03-19
+CLI-0085,Menú San Martín,restaurante,Huancayo Centro,-12.063743,-75.209597,2021-04-15
+CLI-0086,Tienda Wanka,bodega,El Tambo,-12.050059,-75.217479,2021-09-25
+CLI-0087,Market Santa Isabel,minimarket,El Tambo,-12.04439,-75.218026,2023-03-25
+CLI-0088,Market Los Olivos,minimarket,San Carlos,-12.048895,-75.225261,2021-07-04
+CLI-0089,Tienda Wanka,bodega,El Tambo,-12.047666,-75.215212,2025-06-29
+CLI-0090,Tienda El Progreso,bodega,Huancayo Centro,-12.065579,-75.206859,2021-12-10
+CLI-0091,Minimarket El Centro,bodega,Huancayo Cercado,-12.069214,-75.212699,2022-07-30
+CLI-0092,Minimarket El Paraíso,minimarket,El Tambo,-12.04391,-75.22223,2022-06-20
+CLI-0093,Minimarket El Paraíso,bodega,Chilca,-12.079008,-75.19853,2025-04-27
+CLI-0094,Bodega Don José,bodega,San Carlos,-12.049536,-75.229955,2025-04-28
+CLI-0095,Distribuidora Doña María,licoreria,Chilca,-12.084275,-75.200325,2021-05-12
+CLI-0096,Restaurant Don José,restaurante,Huancayo Centro,-12.063477,-75.202611,2022-03-09
+CLI-0097,Tienda Don José,bodega,Huancayo Cercado,-12.069294,-75.214271,2021-04-29
+CLI-0098,Bodega Santa Isabel,bodega,Chilca,-12.086842,-75.190646,2025-06-05
+CLI-0099,Mini Wanka,minimarket,Huancayo Centro,-12.063687,-75.2065,2022-01-17
+CLI-0100,Tienda La Económica,bodega,Huancayo Centro,-12.057452,-75.206116,2023-01-05
+CLI-0101,Menú El Progreso,restaurante,Huancayo Cercado,-12.07334,-75.208261,2022-01-03
+CLI-0102,Bodega La Económica,bodega,Chilca,-12.086012,-75.195426,2025-05-10
+CLI-0103,Minimarket El Tambo,bodega,San Carlos,-12.054507,-75.226171,2021-04-30
+CLI-0104,Tienda Wanka,bodega,Huancayo Cercado,-12.069042,-75.212607,2021-03-15
+CLI-0105,Licorería El Tambo,licoreria,Huancayo Cercado,-12.070053,-75.212707,2022-06-19
+CLI-0106,Restaurant La Económica,restaurante,Huancayo Centro,-12.066668,-75.212594,2022-05-04
+CLI-0107,Tienda Don José,bodega,El Tambo,-12.042493,-75.213952,2021-07-09
+CLI-0108,Mini El Paraíso,minimarket,El Tambo,-12.04255,-75.213125,2021-11-06
+CLI-0109,Cevichería El Tambo,restaurante,El Tambo,-12.046306,-75.216437,2021-07-07
+CLI-0110,Tienda El Paraíso,bodega,El Tambo,-12.045737,-75.212144,2025-01-19
+CLI-0111,Minimarket La Familia,bodega,Huancayo Centro,-12.067991,-75.207645,2021-02-17
+CLI-0112,Minimarket La Esquina,bodega,Huancayo Centro,-12.061952,-75.207828,2021-02-26
+CLI-0113,Tienda San Martín,bodega,Huancayo Cercado,-12.070041,-75.207895,2021-08-15
+CLI-0114,Minimarket El Buen Precio,bodega,El Tambo,-12.042943,-75.216053,2021-01-01
+CLI-0115,Bodega El Centro,bodega,Huancayo Cercado,-12.07449,-75.212769,2021-07-01
+CLI-0116,Minimarket Don José,bodega,San Carlos,-12.053657,-75.224825,2021-03-01
+CLI-0117,Bodega El Centro,bodega,Huancayo Centro,-12.062767,-75.202479,2025-01-28
+CLI-0118,Bodega Santa Isabel,bodega,Huancayo Cercado,-12.07558,-75.209703,2022-11-10
+CLI-0119,Mini La Económica,minimarket,El Tambo,-12.047679,-75.214966,2021-05-16
+CLI-0120,Minimarket La Familia,bodega,El Tambo,-12.047763,-75.212435,2025-03-23
+CLI-0121,Bodega El Centro,bodega,El Tambo,-12.04278,-75.213089,2022-04-15
+CLI-0122,Mini El Tambo,minimarket,Huancayo Centro,-12.060055,-75.199713,2021-03-04
+CLI-0123,Bodega La Familia,bodega,San Carlos,-12.054392,-75.22828,2021-02-02
+CLI-0124,Minimarket El Sol,bodega,San Carlos,-12.049607,-75.222317,2021-04-02
+CLI-0125,Bodega El Progreso,bodega,San Carlos,-12.058247,-75.225453,2025-05-10
+CLI-0126,Restaurant La Esquina,restaurante,Huancayo Cercado,-12.070368,-75.207013,2022-10-13
+CLI-0127,Mini El Ahorro,minimarket,San Carlos,-12.058251,-75.223966,2022-02-14
+CLI-0128,Licores Don José,licoreria,El Tambo,-12.045957,-75.214348,2023-03-05
+CLI-0129,Minimarket San Martín,bodega,Chilca,-12.086884,-75.194066,2022-12-21
+CLI-0130,Minimarket Virgen de Cocharcas,bodega,Huancayo Centro,-12.060787,-75.208386,2025-05-03
+CLI-0131,Tienda El Ahorro,bodega,Chilca,-12.085353,-75.191357,2025-04-28
+CLI-0132,Cevichería Doña María,restaurante,El Tambo,-12.047259,-75.217683,2022-03-03
+CLI-0133,Tienda Los Olivos,bodega,Huancayo Centro,-12.059385,-75.204793,2022-03-15
+CLI-0134,Minimarket Wanka,minimarket,Huancayo Cercado,-12.067446,-75.212122,2022-04-29
+CLI-0135,Bodega El Tambo,bodega,San Carlos,-12.054907,-75.224164,2022-02-24
+CLI-0136,Distribuidora La Familia,licoreria,Chilca,-12.087946,-75.199327,2021-03-30
+CLI-0137,Minimarket Virgen de Cocharcas,bodega,San Carlos,-12.059027,-75.226221,2021-02-01
+CLI-0138,Licores El Sol,licoreria,Huancayo Centro,-12.064911,-75.210576,2021-05-22
+CLI-0139,Mini Wanka,minimarket,Huancayo Cercado,-12.070084,-75.209323,2021-02-27
+CLI-0140,Minimarket Doña María,bodega,San Carlos,-12.051265,-75.226294,2021-06-26
+CLI-0141,Bodega El Sol,bodega,San Carlos,-12.056225,-75.224884,2021-09-05
+CLI-0142,Bodega La Familia,bodega,El Tambo,-12.049607,-75.213831,2023-07-22
+CLI-0143,Licorería Los Andes,licoreria,Chilca,-12.078819,-75.195676,2022-02-01
+CLI-0144,Tienda El Centro,bodega,San Carlos,-12.053333,-75.226867,2021-05-25
+CLI-0145,Bodega Santa Rosa,bodega,San Carlos,-12.053412,-75.22091,2025-03-01
+CLI-0146,Market El Ahorro,minimarket,San Carlos,-12.055498,-75.219353,2025-01-30
+CLI-0147,Minimarket El Buen Precio,bodega,El Tambo,-12.044982,-75.213655,2021-02-18
+CLI-0148,Minimarket El Sol,bodega,Huancayo Centro,-12.065364,-75.202079,2022-06-04
+CLI-0149,Market Mantaro,minimarket,San Carlos,-12.051399,-75.224132,2021-10-16
+CLI-0150,Mini Los Olivos,minimarket,San Carlos,-12.06017,-75.223645,2021-07-24
+CLI-0151,Tienda Wanka,bodega,Huancayo Cercado,-12.071452,-75.203271,2021-01-10
+CLI-0152,Minimarket El Paraíso,bodega,Huancayo Centro,-12.065429,-75.205007,2025-05-23
+CLI-0153,Minimarket Virgen de Cocharcas,bodega,Huancayo Cercado,-12.069896,-75.210848,2022-03-06
+CLI-0154,Market La Económica,minimarket,San Carlos,-12.051686,-75.226237,2021-08-03
+CLI-0155,Tienda La Económica,bodega,El Tambo,-12.044312,-75.212793,2025-06-27
+CLI-0156,Mini Mantaro,minimarket,El Tambo,-12.043187,-75.215908,2025-01-08
+CLI-0157,Minimarket El Sol,bodega,Huancayo Cercado,-12.066056,-75.210329,2025-06-10
+CLI-0158,Tienda El Progreso,bodega,El Tambo,-12.045178,-75.217188,2025-05-10
+CLI-0159,Minimarket El Tambo,bodega,El Tambo,-12.04299,-75.216125,2022-02-04
+CLI-0160,Mini Mantaro,minimarket,Huancayo Cercado,-12.074965,-75.213135,2021-01-11
+CLI-0161,Tienda El Centro,bodega,Huancayo Centro,-12.063241,-75.20388,2022-05-14
+CLI-0162,Licorería Wanka,licoreria,El Tambo,-12.051541,-75.214892,2021-08-10
+CLI-0163,Minimarket El Centro,bodega,Huancayo Cercado,-12.071501,-75.208545,2025-04-08
+CLI-0164,Licores El Ahorro,licoreria,El Tambo,-12.042968,-75.217864,2022-04-22
+CLI-0165,Tienda El Tambo,bodega,El Tambo,-12.047578,-75.216613,2022-06-05
+CLI-0166,Market Virgen de Cocharcas,minimarket,San Carlos,-12.054671,-75.217665,2022-04-05
+CLI-0167,Minimarket Santa Rosa,bodega,Huancayo Cercado,-12.069645,-75.208666,2022-02-01
+CLI-0168,Minimarket La Familia,bodega,Chilca,-12.085181,-75.198216,2025-02-09
+CLI-0169,Mini Santa Rosa,minimarket,San Carlos,-12.058344,-75.225688,2021-03-23
+CLI-0170,Market Doña María,minimarket,Huancayo Centro,-12.06686,-75.200594,2021-04-15
+CLI-0171,Bodega El Centro,bodega,Huancayo Centro,-12.064769,-75.206125,2021-09-04
+CLI-0172,Tienda Mantaro,bodega,Huancayo Centro,-12.065074,-75.202515,2022-03-30
+CLI-0173,Tienda El Tambo,bodega,San Carlos,-12.050262,-75.223516,2025-01-22
+CLI-0174,Bodega La Familia,bodega,El Tambo,-12.043441,-75.218292,2021-06-23
+CLI-0175,Tienda San Martín,bodega,San Carlos,-12.052479,-75.220538,2023-02-21
+CLI-0176,Menú El Ahorro,restaurante,San Carlos,-12.051599,-75.226084,2021-03-30
+CLI-0177,Bodega El Tambo,bodega,Huancayo Centro,-12.067349,-75.205607,2021-01-18
+CLI-0178,Minimarket El Ahorro,bodega,San Carlos,-12.061292,-75.227683,2021-12-22
+CLI-0179,Tienda La Esquina,bodega,Chilca,-12.081135,-75.194815,2021-06-28
+CLI-0180,Minimarket La Familia,bodega,Chilca,-12.091005,-75.19663,2021-10-02
+CLI-0181,Minimarket Mantaro,bodega,Huancayo Centro,-12.062043,-75.201809,2021-01-12
+CLI-0182,Tienda El Paraíso,bodega,Huancayo Centro,-12.064768,-75.204896,2022-06-24
+CLI-0183,Tienda Don José,bodega,San Carlos,-12.05609,-75.225764,2021-05-18
+CLI-0184,Mini Wanka,minimarket,El Tambo,-12.046235,-75.216091,2022-09-12
+CLI-0185,Minimarket San Martín,bodega,El Tambo,-12.045255,-75.219801,2021-07-09
+CLI-0186,Tienda Doña María,bodega,Huancayo Cercado,-12.067436,-75.212401,2021-07-30
+CLI-0187,Pollería Doña María,restaurante,Huancayo Centro,-12.064004,-75.203061,2022-04-03
+CLI-0188,Minimarket San Martín,bodega,El Tambo,-12.039199,-75.209119,2025-03-26
+CLI-0189,Bodega Doña María,bodega,El Tambo,-12.048968,-75.216459,2021-10-12
+CLI-0190,Minimarket Santa Rosa,bodega,San Carlos,-12.057639,-75.218155,2021-03-15
+CLI-0191,Restaurant Doña María,restaurante,El Tambo,-12.047141,-75.222955,2022-02-15
+CLI-0192,Cevichería El Ahorro,restaurante,El Tambo,-12.045133,-75.211128,2021-03-04
+CLI-0193,Minimarket Los Olivos,bodega,San Carlos,-12.052814,-75.22673,2021-01-16
+CLI-0194,Tienda La Económica,bodega,Huancayo Centro,-12.06484,-75.203919,2025-05-26
+CLI-0195,Minimarket La Económica,bodega,Huancayo Centro,-12.060444,-75.201069,2021-01-17
+CLI-0196,Mini Los Andes,minimarket,Huancayo Cercado,-12.071236,-75.215423,2021-07-15
+CLI-0197,Minimarket Los Andes,bodega,Huancayo Cercado,-12.072391,-75.209094,2021-07-10
+CLI-0198,Tienda Los Andes,bodega,Huancayo Cercado,-12.071447,-75.207002,2021-06-24
+CLI-0199,Mini San Martín,minimarket,Huancayo Centro,-12.065446,-75.207408,2022-06-14
+CLI-0200,Licores La Económica,licoreria,El Tambo,-12.046125,-75.213881,2021-04-18
+CLI-0201,Mini San Martín,minimarket,Huancayo Centro,-12.064009,-75.205554,2021-03-02
+CLI-0202,Tienda Santa Isabel,bodega,El Tambo,-12.044249,-75.218979,2022-04-10
+CLI-0203,Minimarket La Esquina,bodega,Huancayo Cercado,-12.071317,-75.211184,2021-06-13
+CLI-0204,Pollería Santa Isabel,restaurante,San Carlos,-12.058472,-75.227896,2025-04-07
+CLI-0205,Pollería El Centro,restaurante,Huancayo Cercado,-12.067738,-75.210753,2021-12-14
+CLI-0206,Bodega El Buen Precio,bodega,El Tambo,-12.04854,-75.212586,2021-11-27
+CLI-0207,Menú El Progreso,restaurante,Huancayo Cercado,-12.070609,-75.208872,2021-10-04
+CLI-0208,Minimarket Virgen de Cocharcas,bodega,Huancayo Centro,-12.069789,-75.204214,2022-01-12
+CLI-0209,Bodega El Ahorro,bodega,El Tambo,-12.042774,-75.220634,2021-04-12
+CLI-0210,Licores Santa Isabel,licoreria,Huancayo Cercado,-12.068594,-75.208026,2023-11-03
+CLI-0211,Tienda Virgen de Cocharcas,bodega,El Tambo,-12.043683,-75.21658,2021-07-21
+CLI-0212,Bodega Los Olivos,bodega,Huancayo Centro,-12.065427,-75.205659,2022-06-07
+CLI-0213,Minimarket Doña María,bodega,San Carlos,-12.049261,-75.223601,2021-05-10
+CLI-0214,Bodega El Tambo,bodega,El Tambo,-12.042251,-75.2202,2022-05-15
+CLI-0215,Licores El Ahorro,licoreria,Huancayo Centro,-12.061114,-75.201163,2021-03-11
+CLI-0216,Licorería El Ahorro,licoreria,San Carlos,-12.055073,-75.223906,2023-06-28
+CLI-0217,Distribuidora Santa Isabel,licoreria,El Tambo,-12.041322,-75.223601,2025-03-24
+CLI-0218,Tienda El Progreso,bodega,Huancayo Cercado,-12.07326,-75.208991,2021-07-30
+CLI-0219,Tienda El Buen Precio,bodega,San Carlos,-12.053613,-75.230614,2021-06-04
+CLI-0220,Distribuidora San Martín,licoreria,El Tambo,-12.041452,-75.215972,2025-02-09
+CLI-0221,Minimarket La Familia,bodega,Huancayo Centro,-12.064332,-75.202945,2021-12-26
+CLI-0222,Restaurant Doña María,restaurante,Chilca,-12.081217,-75.190896,2021-08-09
+CLI-0223,Distribuidora El Progreso,licoreria,Huancayo Centro,-12.065016,-75.205552,2021-03-09
+CLI-0224,Mini El Centro,minimarket,Huancayo Cercado,-12.067527,-75.207237,2021-07-19
+CLI-0225,Minimarket Don José,bodega,Huancayo Centro,-12.067705,-75.209806,2025-04-06
+CLI-0226,Tienda Doña María,bodega,El Tambo,-12.041637,-75.216994,2025-04-02
+CLI-0227,Market Virgen de Cocharcas,minimarket,El Tambo,-12.04413,-75.208023,2021-01-10
+CLI-0228,Pollería El Progreso,restaurante,El Tambo,-12.045316,-75.216186,2021-06-11
+CLI-0229,Mini Los Olivos,minimarket,El Tambo,-12.039644,-75.213928,2025-05-21
+CLI-0230,Menú Virgen de Cocharcas,restaurante,Huancayo Cercado,-12.069879,-75.213859,2022-06-08
+CLI-0231,Tienda La Esquina,bodega,Huancayo Centro,-12.061725,-75.20494,2021-03-03
+CLI-0232,Distribuidora Santa Rosa,licoreria,Huancayo Cercado,-12.071172,-75.204882,2022-05-03
+CLI-0233,Market La Familia,minimarket,El Tambo,-12.042667,-75.217428,2025-05-16
+CLI-0234,Tienda El Centro,bodega,Huancayo Centro,-12.065168,-75.206768,2021-09-18
+CLI-0235,Market El Progreso,minimarket,Huancayo Centro,-12.06855,-75.202764,2021-04-23
+CLI-0236,Tienda La Esquina,bodega,Huancayo Cercado,-12.070635,-75.208504,2022-03-24
+CLI-0237,Bodega Santa Isabel,bodega,Chilca,-12.084796,-75.193356,2022-01-18
+CLI-0238,Licorería Santa Isabel,licoreria,Huancayo Centro,-12.061164,-75.205846,2021-07-21
+CLI-0239,Menú La Familia,restaurante,San Carlos,-12.055565,-75.226273,2021-07-15
+CLI-0240,Tienda La Económica,bodega,Huancayo Centro,-12.063434,-75.203972,2021-02-14
+CLI-0241,Tienda Mantaro,bodega,San Carlos,-12.052752,-75.230062,2021-05-19
+CLI-0242,Minimarket Los Olivos,bodega,San Carlos,-12.055315,-75.220908,2022-04-21
+CLI-0243,Bodega Wanka,bodega,Huancayo Cercado,-12.068813,-75.214701,2023-03-28
+CLI-0244,Minimarket El Buen Precio,minimarket,Huancayo Cercado,-12.072186,-75.207685,2025-06-20
+CLI-0245,Bodega El Paraíso,bodega,Huancayo Cercado,-12.07245,-75.21344,2025-03-17
+CLI-0246,Tienda La Familia,bodega,San Carlos,-12.059761,-75.224925,2021-05-31
+CLI-0247,Cevichería Los Andes,restaurante,Chilca,-12.088787,-75.194912,2021-11-08
+CLI-0248,Bodega Los Andes,bodega,Huancayo Centro,-12.063449,-75.207009,2022-06-26
+CLI-0249,Minimarket El Centro,bodega,Chilca,-12.087955,-75.196367,2021-08-26
+CLI-0250,Licorería Los Olivos,licoreria,El Tambo,-12.043642,-75.214037,2023-08-01
+CLI-0251,Minimarket San Martín,minimarket,Huancayo Cercado,-12.066602,-75.206206,2021-05-24
+CLI-0252,Market Santa Rosa,minimarket,El Tambo,-12.045653,-75.216151,2021-04-12
+CLI-0253,Bodega El Progreso,bodega,Huancayo Cercado,-12.072034,-75.208404,2022-05-22
+CLI-0254,Bodega La Esquina,bodega,Huancayo Cercado,-12.06986,-75.207714,2021-06-02
+CLI-0255,Pollería El Ahorro,restaurante,San Carlos,-12.050229,-75.223875,2023-07-28
+CLI-0256,Bodega El Centro,bodega,El Tambo,-12.044151,-75.211746,2021-12-01
+CLI-0257,Tienda Wanka,bodega,El Tambo,-12.049413,-75.213491,2025-01-30
+CLI-0258,Tienda Los Andes,bodega,Huancayo Centro,-12.065458,-75.201391,2021-06-06
+CLI-0259,Minimarket La Familia,bodega,Chilca,-12.083391,-75.196157,2025-02-15
+CLI-0260,Market Los Andes,minimarket,Chilca,-12.084614,-75.187839,2025-02-03
+CLI-0261,Licores Doña María,licoreria,El Tambo,-12.047089,-75.214328,2021-12-02
+CLI-0262,Licorería La Familia,licoreria,Chilca,-12.084595,-75.19365,2021-06-04
+CLI-0263,Minimarket Los Olivos,minimarket,Huancayo Cercado,-12.072178,-75.210842,2022-05-14
+CLI-0264,Tienda Don José,bodega,El Tambo,-12.043079,-75.216615,2022-01-23
+CLI-0265,Tienda El Centro,bodega,Huancayo Cercado,-12.074718,-75.214146,2025-02-10
+CLI-0266,Market Don José,minimarket,Huancayo Centro,-12.057976,-75.210113,2022-04-28
+CLI-0267,Market El Sol,minimarket,San Carlos,-12.061976,-75.22429,2021-02-26
+CLI-0268,Pollería La Económica,restaurante,El Tambo,-12.046743,-75.221827,2021-09-02
+CLI-0269,Restaurant Santa Rosa,restaurante,Huancayo Centro,-12.066851,-75.206485,2025-05-30
+CLI-0270,Bodega El Sol,bodega,Huancayo Centro,-12.059331,-75.201518,2021-02-08
+CLI-0271,Market El Progreso,minimarket,San Carlos,-12.054887,-75.225273,2021-06-17
+CLI-0272,Minimarket La Familia,bodega,Chilca,-12.089105,-75.195569,2021-10-12
+CLI-0273,Tienda Wanka,bodega,Huancayo Cercado,-12.06848,-75.213935,2022-06-04
+CLI-0274,Minimarket Los Olivos,bodega,Huancayo Centro,-12.062421,-75.207224,2022-04-12
+CLI-0275,Minimarket San Martín,bodega,Huancayo Cercado,-12.068114,-75.20487,2022-05-03
+CLI-0276,Mini El Progreso,minimarket,Huancayo Centro,-12.06699,-75.208071,2021-12-06
+CLI-0277,Bodega El Buen Precio,bodega,Huancayo Cercado,-12.072753,-75.201571,2022-02-25
+CLI-0278,Tienda Los Olivos,bodega,El Tambo,-12.039882,-75.211641,2023-06-27
+CLI-0279,Market Mantaro,minimarket,El Tambo,-12.040613,-75.212572,2021-08-12
+CLI-0280,Minimarket San Martín,bodega,San Carlos,-12.051672,-75.229776,2021-09-20
+CLI-0281,Tienda El Centro,bodega,Huancayo Centro,-12.064278,-75.205802,2021-04-07
+CLI-0282,Licorería El Tambo,licoreria,El Tambo,-12.046329,-75.215119,2021-01-18
+CLI-0283,Market San Martín,minimarket,El Tambo,-12.050763,-75.213569,2022-05-30
+CLI-0284,Tienda Santa Rosa,bodega,San Carlos,-12.054179,-75.225021,2025-05-17
+CLI-0285,Licores El Progreso,licoreria,El Tambo,-12.043548,-75.215782,2025-05-10
+CLI-0286,Restaurant El Paraíso,restaurante,Huancayo Centro,-12.063079,-75.202318,2022-05-24
+CLI-0287,Market Doña María,minimarket,San Carlos,-12.054828,-75.228352,2025-04-25
+CLI-0288,Minimarket El Tambo,bodega,El Tambo,-12.040565,-75.217702,2021-11-02
+CLI-0289,Pollería El Paraíso,restaurante,Huancayo Centro,-12.069031,-75.211013,2021-02-27
+CLI-0290,Tienda Doña María,bodega,Huancayo Centro,-12.064406,-75.205798,2021-10-29
+CLI-0291,Minimarket La Esquina,bodega,Huancayo Centro,-12.061969,-75.20372,2021-10-10
+CLI-0292,Cevichería San Martín,restaurante,El Tambo,-12.04413,-75.214528,2021-03-22
+CLI-0293,Tienda San Martín,bodega,San Carlos,-12.052384,-75.226685,2021-03-18
+CLI-0294,Tienda La Esquina,bodega,San Carlos,-12.049573,-75.220724,2021-11-23
+CLI-0295,Market La Esquina,minimarket,Huancayo Centro,-12.064796,-75.210924,2021-10-24
+CLI-0296,Market Wanka,minimarket,Chilca,-12.081926,-75.19735,2025-04-20
+CLI-0297,Bodega El Sol,bodega,Huancayo Cercado,-12.074653,-75.208641,2021-01-15
+CLI-0298,Distribuidora El Paraíso,licoreria,San Carlos,-12.05539,-75.223143,2022-03-26
+CLI-0299,Distribuidora La Familia,licoreria,Huancayo Centro,-12.063794,-75.207241,2021-04-15
+CLI-0300,Market San Martín,minimarket,San Carlos,-12.056848,-75.221924,2021-02-12
+CLI-0301,Market El Ahorro,minimarket,Chilca,-12.090765,-75.191613,2022-01-29
+CLI-0302,Tienda Virgen de Cocharcas,bodega,San Carlos,-12.052803,-75.230157,2021-06-20
+CLI-0303,Tienda La Familia,bodega,San Carlos,-12.050187,-75.2251,2021-04-19
+CLI-0304,Minimarket San Martín,bodega,El Tambo,-12.048684,-75.221541,2025-02-13
+CLI-0305,Tienda El Sol,bodega,Huancayo Centro,-12.067714,-75.198897,2022-02-16
+CLI-0306,Tienda El Paraíso,bodega,Huancayo Cercado,-12.073074,-75.207276,2025-02-21
+CLI-0307,Restaurant San Martín,restaurante,El Tambo,-12.046921,-75.215813,2021-05-28
+CLI-0308,Minimarket El Ahorro,bodega,Huancayo Centro,-12.066391,-75.20251,2022-01-10
+CLI-0309,Minimarket El Progreso,minimarket,Huancayo Cercado,-12.074021,-75.20769,2021-05-17
+CLI-0310,Tienda El Ahorro,bodega,Huancayo Cercado,-12.071681,-75.209907,2021-01-08
+CLI-0311,Bodega Doña María,bodega,El Tambo,-12.047302,-75.217419,2021-05-13
+CLI-0312,Mini La Familia,minimarket,San Carlos,-12.054736,-75.223824,2021-05-21
+CLI-0313,Distribuidora El Ahorro,licoreria,El Tambo,-12.046356,-75.216998,2025-06-22
+CLI-0314,Minimarket El Tambo,bodega,Huancayo Cercado,-12.073333,-75.206434,2025-01-27
+CLI-0315,Bodega La Familia,bodega,El Tambo,-12.045031,-75.210229,2025-06-27
+CLI-0316,Licores Santa Rosa,licoreria,Huancayo Centro,-12.065056,-75.20727,2021-10-02
+CLI-0317,Minimarket El Tambo,bodega,El Tambo,-12.043305,-75.222806,2025-06-05
+CLI-0318,Minimarket La Esquina,bodega,San Carlos,-12.056191,-75.224659,2021-10-17
+CLI-0319,Market El Tambo,minimarket,Chilca,-12.084116,-75.192232,2021-08-07
+CLI-0320,Restaurant Los Olivos,restaurante,El Tambo,-12.043019,-75.213506,2022-01-26
+CLI-0321,Tienda El Tambo,bodega,Huancayo Cercado,-12.066523,-75.201428,2021-05-03
+CLI-0322,Mini El Paraíso,minimarket,Chilca,-12.086808,-75.198279,2025-01-24
+CLI-0323,Minimarket El Tambo,bodega,Huancayo Cercado,-12.070927,-75.210519,2021-09-02
+CLI-0324,Minimarket Santa Rosa,bodega,San Carlos,-12.059221,-75.230933,2021-01-08
+CLI-0325,Minimarket El Tambo,bodega,Huancayo Centro,-12.065203,-75.204739,2022-06-19
+CLI-0326,Minimarket Los Olivos,bodega,Huancayo Centro,-12.064625,-75.201833,2021-03-01
+CLI-0327,Tienda Virgen de Cocharcas,bodega,El Tambo,-12.043597,-75.214415,2022-02-04
+CLI-0328,Menú Doña María,restaurante,El Tambo,-12.042388,-75.217414,2023-09-07
+CLI-0329,Tienda El Centro,bodega,San Carlos,-12.057141,-75.222684,2023-01-02
+CLI-0330,Tienda Don José,bodega,El Tambo,-12.044366,-75.213829,2025-05-24
+CLI-0331,Bodega Santa Isabel,bodega,El Tambo,-12.045778,-75.214812,2021-04-11
+CLI-0332,Minimarket El Ahorro,bodega,El Tambo,-12.047427,-75.214797,2022-05-03
+CLI-0333,Bodega Mantaro,bodega,Huancayo Centro,-12.063833,-75.201695,2022-06-10
+CLI-0334,Cevichería San Martín,restaurante,Chilca,-12.086055,-75.194253,2025-06-24
+CLI-0335,Minimarket Los Andes,bodega,Chilca,-12.085997,-75.186888,2022-01-22
+CLI-0336,Menú Santa Rosa,restaurante,Huancayo Centro,-12.066193,-75.204518,2022-01-28
+CLI-0337,Licorería El Sol,licoreria,El Tambo,-12.044327,-75.213197,2021-05-23
+CLI-0338,Bodega Virgen de Cocharcas,bodega,Chilca,-12.087832,-75.191097,2021-11-17
+CLI-0339,Bodega El Tambo,bodega,San Carlos,-12.060128,-75.227215,2021-03-03
+CLI-0340,Minimarket El Centro,bodega,El Tambo,-12.043995,-75.214845,2021-07-13
+CLI-0341,Minimarket La Familia,minimarket,Huancayo Centro,-12.058737,-75.204197,2021-03-22
+CLI-0342,Tienda El Ahorro,bodega,Chilca,-12.086405,-75.188967,2025-06-20
+CLI-0343,Bodega Mantaro,bodega,Huancayo Cercado,-12.06989,-75.209481,2021-04-13
+CLI-0344,Bodega Los Andes,bodega,El Tambo,-12.046619,-75.215531,2021-05-23
+CLI-0345,Bodega El Centro,bodega,El Tambo,-12.046368,-75.213687,2025-03-05
+CLI-0346,Bodega El Sol,bodega,Chilca,-12.079665,-75.197599,2025-03-19
+CLI-0347,Market El Progreso,minimarket,Chilca,-12.089457,-75.194722,2022-05-20
+CLI-0348,Bodega Santa Isabel,bodega,San Carlos,-12.054547,-75.223262,2023-04-06
+CLI-0349,Bodega Mantaro,bodega,El Tambo,-12.048861,-75.210252,2021-06-18
+CLI-0350,Bodega El Centro,bodega,San Carlos,-12.055915,-75.221312,2021-04-13
+CLI-0351,Bodega Santa Isabel,bodega,El Tambo,-12.046862,-75.219747,2021-12-03
+CLI-0352,Mini El Progreso,minimarket,Chilca,-12.082975,-75.202144,2025-01-01
+CLI-0353,Tienda El Buen Precio,bodega,Huancayo Cercado,-12.066746,-75.208347,2021-12-03
+CLI-0354,Bodega La Familia,bodega,Huancayo Cercado,-12.067632,-75.208175,2021-02-12
+CLI-0355,Bodega Santa Rosa,bodega,El Tambo,-12.048271,-75.213106,2025-05-15
+CLI-0356,Tienda La Económica,bodega,San Carlos,-12.05664,-75.230952,2021-05-24
+CLI-0357,Tienda El Buen Precio,bodega,Huancayo Cercado,-12.068624,-75.208911,2025-02-07
+CLI-0358,Tienda Santa Rosa,bodega,El Tambo,-12.041576,-75.211392,2021-03-08
+CLI-0359,Restaurant Santa Isabel,restaurante,Chilca,-12.08725,-75.196522,2021-06-13
+CLI-0360,Tienda Virgen de Cocharcas,bodega,San Carlos,-12.053892,-75.22648,2021-01-31
+CLI-0361,Minimarket Doña María,bodega,El Tambo,-12.042521,-75.214162,2025-02-22
+CLI-0362,Minimarket El Ahorro,bodega,El Tambo,-12.043785,-75.208297,2023-08-28
+CLI-0363,Bodega El Buen Precio,bodega,El Tambo,-12.044965,-75.22215,2021-01-23
+CLI-0364,Market San Martín,minimarket,El Tambo,-12.047706,-75.219658,2022-04-21
+CLI-0365,Mini El Sol,minimarket,Huancayo Centro,-12.056798,-75.202396,2021-03-02
+CLI-0366,Bodega El Paraíso,bodega,El Tambo,-12.045566,-75.212565,2021-03-20
+CLI-0367,Tienda Mantaro,bodega,Huancayo Cercado,-12.067752,-75.208045,2021-05-01
+CLI-0368,Tienda El Tambo,bodega,San Carlos,-12.05455,-75.224028,2023-04-04
+CLI-0369,Distribuidora El Tambo,licoreria,San Carlos,-12.056057,-75.223559,2022-05-16
+CLI-0370,Bodega San Martín,bodega,Huancayo Centro,-12.062733,-75.208202,2021-02-28
+CLI-0371,Cevichería El Buen Precio,restaurante,Chilca,-12.092318,-75.193487,2021-01-31
+CLI-0372,Mini Mantaro,minimarket,Chilca,-12.089599,-75.196551,2025-04-24
+CLI-0373,Mini Virgen de Cocharcas,minimarket,San Carlos,-12.051631,-75.225135,2021-07-27
+CLI-0374,Minimarket El Progreso,bodega,Huancayo Centro,-12.06858,-75.206226,2021-03-29
+CLI-0375,Mini La Familia,minimarket,El Tambo,-12.042059,-75.214156,2021-06-05
+CLI-0376,Tienda Santa Isabel,bodega,El Tambo,-12.044128,-75.216064,2021-12-07
+CLI-0377,Tienda Los Andes,bodega,El Tambo,-12.050108,-75.219324,2021-06-11
+CLI-0378,Minimarket El Ahorro,bodega,El Tambo,-12.051981,-75.220584,2021-11-20
+CLI-0379,Tienda Los Andes,bodega,Huancayo Cercado,-12.066599,-75.203679,2021-06-15
+CLI-0380,Tienda La Familia,bodega,Huancayo Centro,-12.068155,-75.204593,2021-04-01
+CLI-0381,Minimarket El Paraíso,minimarket,Chilca,-12.087949,-75.194171,2021-04-15
+CLI-0382,Tienda Virgen de Cocharcas,bodega,San Carlos,-12.052781,-75.222542,2022-05-19
+CLI-0383,Licorería La Económica,licoreria,Huancayo Centro,-12.062643,-75.206505,2022-04-06
+CLI-0384,Mini El Sol,minimarket,San Carlos,-12.052012,-75.226814,2022-05-28
+CLI-0385,Cevichería El Paraíso,restaurante,Huancayo Centro,-12.065564,-75.208467,2022-05-14
+CLI-0386,Minimarket San Martín,bodega,Huancayo Centro,-12.065052,-75.206283,2021-04-28
+CLI-0387,Cevichería El Ahorro,restaurante,San Carlos,-12.054891,-75.231095,2025-04-21
+CLI-0388,Bodega Don José,bodega,Huancayo Centro,-12.064448,-75.205007,2025-05-05
+CLI-0389,Tienda El Progreso,bodega,El Tambo,-12.040867,-75.215007,2021-01-26
+CLI-0390,Tienda El Paraíso,bodega,Huancayo Cercado,-12.063368,-75.210366,2021-04-05
+CLI-0391,Bodega El Buen Precio,bodega,Huancayo Cercado,-12.069253,-75.206974,2023-08-13
+CLI-0392,Minimarket Don José,bodega,El Tambo,-12.042284,-75.215921,2022-11-07
+CLI-0393,Licores Virgen de Cocharcas,licoreria,Huancayo Centro,-12.064729,-75.20666,2021-12-15
+CLI-0394,Minimarket El Buen Precio,minimarket,El Tambo,-12.039653,-75.215641,2022-03-27
+CLI-0395,Bodega La Esquina,bodega,Huancayo Centro,-12.066214,-75.201653,2021-04-22
+CLI-0396,Cevichería Los Olivos,restaurante,Huancayo Cercado,-12.070525,-75.206863,2022-05-09
+CLI-0397,Licores El Ahorro,licoreria,Huancayo Centro,-12.063659,-75.203677,2022-04-01
+CLI-0398,Tienda Mantaro,bodega,Chilca,-12.078938,-75.200205,2021-03-24
+CLI-0399,Menú El Sol,restaurante,Huancayo Cercado,-12.076255,-75.208833,2025-01-16
+CLI-0400,Pollería El Paraíso,restaurante,Huancayo Centro,-12.064023,-75.204762,2022-06-25
+CLI-0401,Minimarket Doña María,bodega,Huancayo Centro,-12.064496,-75.203581,2025-03-04
+CLI-0402,Tienda El Ahorro,bodega,Huancayo Cercado,-12.069451,-75.21022,2021-06-07
+CLI-0403,Tienda El Buen Precio,bodega,El Tambo,-12.040883,-75.217973,2022-01-24
+CLI-0404,Tienda La Familia,bodega,El Tambo,-12.044752,-75.21077,2025-05-17
+CLI-0405,Licores Doña María,licoreria,El Tambo,-12.043591,-75.212861,2022-03-07
+CLI-0406,Bodega El Buen Precio,bodega,San Carlos,-12.051885,-75.226631,2021-09-04
+CLI-0407,Tienda Wanka,bodega,Huancayo Cercado,-12.072692,-75.212979,2021-08-02
+CLI-0408,Market Virgen de Cocharcas,minimarket,El Tambo,-12.046809,-75.216177,2021-02-08
+CLI-0409,Minimarket Mantaro,bodega,El Tambo,-12.047314,-75.210028,2021-02-05
+CLI-0410,Minimarket La Esquina,bodega,San Carlos,-12.055465,-75.220941,2021-05-25
+CLI-0411,Tienda La Esquina,bodega,El Tambo,-12.047959,-75.215167,2021-02-02
+CLI-0412,Pollería Santa Isabel,restaurante,San Carlos,-12.055988,-75.225642,2022-06-22
+CLI-0413,Minimarket El Ahorro,bodega,Chilca,-12.087908,-75.197871,2021-01-24
+CLI-0414,Minimarket La Esquina,minimarket,Huancayo Centro,-12.057922,-75.208072,2022-05-02
+CLI-0415,Bodega El Progreso,bodega,Huancayo Centro,-12.065162,-75.206658,2022-03-19
+CLI-0416,Bodega El Centro,bodega,El Tambo,-12.0471,-75.216042,2022-09-01
+CLI-0417,Bodega San Martín,bodega,Chilca,-12.085814,-75.19506,2022-01-21
+CLI-0418,Bodega El Centro,bodega,Huancayo Cercado,-12.070719,-75.208904,2021-10-30
+CLI-0419,Menú Virgen de Cocharcas,restaurante,El Tambo,-12.041301,-75.215665,2021-06-04
+CLI-0420,Bodega El Centro,bodega,Huancayo Centro,-12.065819,-75.201039,2022-03-03
+CLI-0421,Cevichería El Ahorro,restaurante,San Carlos,-12.056097,-75.220803,2021-04-02
+CLI-0422,Restaurant Doña María,restaurante,El Tambo,-12.042428,-75.218336,2023-01-08
+CLI-0423,Minimarket Santa Rosa,minimarket,San Carlos,-12.053799,-75.233585,2021-06-04
+CLI-0424,Market El Ahorro,minimarket,San Carlos,-12.058421,-75.225424,2021-05-24
+CLI-0425,Minimarket El Tambo,bodega,Huancayo Cercado,-12.073258,-75.209473,2021-05-01
+CLI-0426,Minimarket El Buen Precio,bodega,Chilca,-12.087714,-75.195509,2021-08-25
+CLI-0427,Distribuidora Santa Isabel,licoreria,Huancayo Centro,-12.059918,-75.206287,2021-10-15
+CLI-0428,Distribuidora La Económica,licoreria,El Tambo,-12.040824,-75.217559,2022-01-22
+CLI-0429,Bodega Don José,bodega,Huancayo Centro,-12.06162,-75.201762,2022-05-08
+CLI-0430,Minimarket Santa Rosa,bodega,San Carlos,-12.056181,-75.229857,2021-01-25
+CLI-0431,Licorería Santa Isabel,licoreria,El Tambo,-12.044005,-75.21275,2021-11-29
+CLI-0432,Minimarket El Centro,bodega,San Carlos,-12.056626,-75.227082,2022-06-05
+CLI-0433,Minimarket El Paraíso,bodega,Huancayo Centro,-12.062197,-75.20317,2021-07-12
+CLI-0434,Minimarket El Progreso,bodega,Huancayo Cercado,-12.071391,-75.208604,2021-12-21
+CLI-0435,Tienda El Centro,bodega,Huancayo Cercado,-12.066802,-75.208846,2021-02-11
+CLI-0436,Menú Los Olivos,restaurante,Huancayo Cercado,-12.065561,-75.210326,2021-07-25
+CLI-0437,Market La Esquina,minimarket,El Tambo,-12.046719,-75.213319,2022-01-08
+CLI-0438,Bodega Los Olivos,bodega,Huancayo Centro,-12.062477,-75.207846,2021-06-23
+CLI-0439,Bodega El Sol,bodega,Huancayo Centro,-12.064265,-75.209028,2022-04-26
+CLI-0440,Bodega El Ahorro,bodega,Huancayo Cercado,-12.071606,-75.214387,2021-05-30
+CLI-0441,Bodega El Centro,bodega,Huancayo Cercado,-12.069103,-75.207972,2021-08-05
+CLI-0442,Mini Doña María,minimarket,Huancayo Centro,-12.070093,-75.197418,2025-01-23
+CLI-0443,Mini El Tambo,minimarket,San Carlos,-12.05352,-75.225323,2021-08-27
+CLI-0444,Market Los Olivos,minimarket,San Carlos,-12.051712,-75.223259,2021-03-23
+CLI-0445,Minimarket El Tambo,bodega,El Tambo,-12.046862,-75.212641,2021-05-10
+CLI-0446,Minimarket Don José,bodega,Huancayo Cercado,-12.072466,-75.205274,2025-01-28
+CLI-0447,Minimarket Virgen de Cocharcas,bodega,Huancayo Centro,-12.069506,-75.203001,2021-08-13
+CLI-0448,Tienda Mantaro,bodega,Chilca,-12.080412,-75.194806,2022-02-04
+CLI-0449,Tienda El Buen Precio,bodega,El Tambo,-12.050685,-75.214649,2021-03-26
+CLI-0450,Minimarket La Familia,bodega,Chilca,-12.084083,-75.192319,2021-05-02
+CLI-0451,Tienda La Familia,bodega,San Carlos,-12.053465,-75.224575,2025-03-26
+CLI-0452,Tienda El Sol,bodega,Huancayo Cercado,-12.07199,-75.211987,2021-10-10
+CLI-0453,Minimarket El Paraíso,bodega,El Tambo,-12.042574,-75.216681,2021-03-28
+CLI-0454,Minimarket El Buen Precio,bodega,El Tambo,-12.041572,-75.21494,2021-07-20
+CLI-0455,Minimarket El Centro,minimarket,El Tambo,-12.045003,-75.221705,2023-06-27
+CLI-0456,Tienda San Martín,bodega,El Tambo,-12.042264,-75.217166,2021-01-18
+CLI-0457,Cevichería Don José,restaurante,El Tambo,-12.042304,-75.212598,2023-08-07
+CLI-0458,Distribuidora La Económica,licoreria,El Tambo,-12.041465,-75.211831,2021-09-15
+CLI-0459,Bodega El Tambo,bodega,Huancayo Cercado,-12.071204,-75.212252,2022-08-08
+CLI-0460,Cevichería Santa Rosa,restaurante,Chilca,-12.084319,-75.1902,2021-02-13
+CLI-0461,Tienda La Económica,bodega,Chilca,-12.082735,-75.195884,2025-03-05
+CLI-0462,Bodega Wanka,bodega,El Tambo,-12.044447,-75.209147,2021-09-16
+CLI-0463,Tienda El Sol,bodega,Huancayo Cercado,-12.069915,-75.2148,2021-06-13
+CLI-0464,Bodega Los Olivos,bodega,El Tambo,-12.04516,-75.215092,2021-05-08
+CLI-0465,Market Mantaro,minimarket,Chilca,-12.089034,-75.197353,2021-06-21
+CLI-0466,Minimarket Wanka,bodega,Huancayo Cercado,-12.070587,-75.209222,2025-06-15
+CLI-0467,Minimarket El Buen Precio,bodega,El Tambo,-12.040242,-75.214334,2021-05-06
+CLI-0468,Minimarket San Martín,bodega,Huancayo Cercado,-12.071456,-75.212299,2025-03-21
+CLI-0469,Tienda Doña María,bodega,Chilca,-12.081253,-75.192937,2021-10-21
+CLI-0470,Minimarket La Esquina,minimarket,San Carlos,-12.051819,-75.225811,2022-04-19
+CLI-0471,Minimarket Virgen de Cocharcas,minimarket,Huancayo Centro,-12.064744,-75.201938,2022-05-22
+CLI-0472,Menú El Paraíso,restaurante,El Tambo,-12.046594,-75.221134,2025-03-23
+CLI-0473,Tienda La Esquina,bodega,El Tambo,-12.045511,-75.21496,2021-06-18
+CLI-0474,Mini Wanka,minimarket,San Carlos,-12.053284,-75.228689,2021-08-02
+CLI-0475,Minimarket Don José,bodega,Huancayo Centro,-12.065388,-75.207405,2025-04-18
+CLI-0476,Market San Martín,minimarket,El Tambo,-12.044397,-75.216121,2021-09-03
+CLI-0477,Minimarket Santa Rosa,bodega,Huancayo Cercado,-12.067012,-75.212803,2021-05-31
+CLI-0478,Tienda Don José,bodega,Chilca,-12.086424,-75.197016,2025-01-24
+CLI-0479,Menú Don José,restaurante,Chilca,-12.084488,-75.19587,2021-02-12
+CLI-0480,Bodega El Centro,bodega,Huancayo Centro,-12.062523,-75.204277,2025-02-24
+CLI-0481,Minimarket El Buen Precio,bodega,Chilca,-12.085027,-75.200176,2025-02-24
+CLI-0482,Minimarket El Tambo,bodega,Huancayo Centro,-12.066667,-75.206312,2021-03-09
+CLI-0483,Tienda La Esquina,bodega,San Carlos,-12.052092,-75.221286,2025-01-12
+CLI-0484,Minimarket El Centro,minimarket,Huancayo Centro,-12.061115,-75.206869,2021-01-18
+CLI-0485,Bodega Don José,bodega,San Carlos,-12.052656,-75.221842,2022-01-16
+CLI-0486,Tienda Doña María,bodega,San Carlos,-12.057439,-75.224295,2021-10-04
+CLI-0487,Bodega La Esquina,bodega,Chilca,-12.082754,-75.197,2025-04-20
+CLI-0488,Minimarket San Martín,bodega,Chilca,-12.082937,-75.193362,2022-08-29
+CLI-0489,Licores El Buen Precio,licoreria,San Carlos,-12.057178,-75.223891,2022-07-29
+CLI-0490,Bodega El Centro,bodega,Huancayo Centro,-12.068475,-75.201103,2021-03-17
+CLI-0491,Bodega Doña María,bodega,Chilca,-12.075905,-75.195683,2023-06-14
+CLI-0492,Mini El Buen Precio,minimarket,Huancayo Cercado,-12.06467,-75.209283,2021-12-28
+CLI-0493,Minimarket El Sol,minimarket,El Tambo,-12.046825,-75.217329,2021-05-10
+CLI-0494,Bodega Los Andes,bodega,Huancayo Centro,-12.06346,-75.203236,2021-04-04
+CLI-0495,Bodega Santa Isabel,bodega,Huancayo Cercado,-12.071859,-75.212753,2025-01-24
+CLI-0496,Cevichería La Económica,restaurante,Huancayo Cercado,-12.06767,-75.215284,2022-09-01
+CLI-0497,Bodega Santa Rosa,bodega,Huancayo Cercado,-12.072961,-75.214494,2022-03-18
+CLI-0498,Mini El Tambo,minimarket,Huancayo Centro,-12.06727,-75.205972,2021-04-12
+CLI-0499,Mini El Tambo,minimarket,Huancayo Centro,-12.068642,-75.205247,2022-05-27
+CLI-0500,Market El Ahorro,minimarket,El Tambo,-12.046721,-75.21151,2022-10-13
