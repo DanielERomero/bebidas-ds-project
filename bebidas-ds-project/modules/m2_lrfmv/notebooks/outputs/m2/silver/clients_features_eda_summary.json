@@ -1,0 +1,60 @@
+{
+  "snapshot_date": "2025-06-30",
+  "observation_window_days": 180,
+  "delta_window_days": 90,
+  "n_clients": 500,
+  "n_clients_without_transactions": 2,
+  "n_new_clients": 86,
+  "n_low_history_clients": 10,
+  "n_churn_eligible_clients": 414,
+  "lrfmv_skew": {
+    "R": 2.4273534391802385,
+    "M": 2.341231766848268,
+    "F": 0.7401172755714209,
+    "V": -0.6206261858330231,
+    "L": -1.159246546553159
+  },
+  "lrfmv_correlation": {
+    "L": {
+      "L": 1.0,
+      "R": 0.2013,
+      "F": 0.2802,
+      "M": 0.3407,
+      "V": 0.1845
+    },
+    "R": {
+      "L": 0.2013,
+      "R": 1.0,
+      "F": -0.5534,
+      "M": -0.383,
+      "V": -0.7722
+    },
+    "F": {
+      "L": 0.2802,
+      "R": -0.5534,
+      "F": 1.0,
+      "M": 0.856,
+      "V": 0.7626
+    },
+    "M": {
+      "L": 0.3407,
+      "R": -0.383,
+      "F": 0.856,
+      "M": 1.0,
+      "V": 0.6715
+    },
+    "V": {
+      "L": 0.1845,
+      "R": -0.7722,
+      "F": 0.7626,
+      "M": 0.6715,
+      "V": 1.0
+    }
+  },
+  "categories_detected": [
+    "agua",
+    "energeticas",
+    "gaseosas",
+    "jugos"
+  ]
+}
