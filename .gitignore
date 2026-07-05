@@ -1,10 +1,45 @@
-# Python-generated files
+# Python
 __pycache__/
-*.py[oc]
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Build artifacts
 build/
 dist/
 wheels/
-*.egg-info
 
 # Virtual environments
-.venv
+.venv/
+venv/
+env/
+
+# Local configuration
+.env
+.env.*
+!.env.example
+
+# Generated outputs
+outputs/*
+!outputs/.gitkeep
+!outputs/m2/
+outputs/m2/*
+!outputs/m2/.gitkeep
+bebidas-ds-project/modules/*/outputs/*
+bebidas-ds-project/modules/*/notebooks/outputs/*
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+~$*
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
