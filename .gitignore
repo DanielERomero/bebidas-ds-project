@@ -28,8 +28,8 @@ outputs/*
 !outputs/m2/
 outputs/m2/*
 !outputs/m2/.gitkeep
-bebidas-ds-project/modules/*/outputs/*
-bebidas-ds-project/modules/*/notebooks/outputs/*
+modules/*/outputs/*
+modules/*/notebooks/outputs/*
 
 # Logs and temporary files
 *.log
