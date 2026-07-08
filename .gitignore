@@ -31,6 +31,12 @@ outputs/m2/*
 modules/*/outputs/*
 modules/*/notebooks/outputs/*
 
+# Local test PDFs with personal data
+modules/m1_CV/tests/pdfs/*
+!modules/m1_CV/tests/pdfs/.gitkeep
+modules/m1_CV/tests/outputs/*
+!modules/m1_CV/tests/outputs/.gitkeep
+
 # Logs and temporary files
 *.log
 *.tmp
