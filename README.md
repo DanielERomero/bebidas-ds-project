@@ -92,37 +92,20 @@ uv sync
 
 Este comando crea el entorno virtual `.venv` y sincroniza las dependencias definidas en `pyproject.toml` y `uv.lock`.
 
-### 5. Usar el entorno en notebooks
+### Módulo 2 — flujo SQL Medallion
 
-Para abrir Jupyter desde el entorno de `uv`:
+1. Crear schemas en Supabase:
+   bronze, silver, gold
 
-```bash
-uv run jupyter notebook
-```
+2. Ejecutar scripts SQL desde /sql
 
-Si trabajas en VS Code, selecciona como kernel el entorno `.venv` creado dentro de:
+3. Cargar CSVs a bronze
 
-```text
-modules/m2_lrfmv/.venv
-```
+4. SQL calcula silver.client_lrfmv_features
 
-### 6. Ejecutar notebooks en orden
+5. Python lee Silver, ejecuta K-Means y escribe Gold
 
-Desde `modules/m2_lrfmv/notebooks`, ejecutar:
+6. Resultado final:
+   gold.clients_clustered
 
-```text
-01_eda_bronze.ipynb
-02_silver_clients_features_final.ipynb
-03_gold_clients_clustered.ipynb
-```
-
-## Salidas esperadas
-
-Al ejecutar los notebooks se generan archivos en:
-
-```text
-modules/m2_lrfmv/outputs/m2/eda
-modules/m2_lrfmv/outputs/m2/silver
-modules/m2_lrfmv/outputs/m2/gold
-modules/m2_lrfmv/outputs/m2/figures
 ```
