@@ -1,1148 +1,554 @@
-# M1_SPEC_SIMPLE_v1 — Perfilamiento Comercial de Preventistas con IA
+# M1 - Perfil comercial de preventistas
 
-**Proyecto:** Sistema de Data Science para distribución B2B de bebidas  
-**Módulo:** Módulo 1 — CV Screening y Perfilamiento Comercial con IA  
-**Versión:** Simple v1 — versión académica enfocada en aprendizaje  
-**Fecha:** 2026-07-08  
-**Estado:** Spec de trabajo para adaptar el Módulo 1 heredado al proyecto actual.
+## 1. Propósito
+
+El Módulo 1 procesa un informe interno de desempeño preparado por RR. HH. para
+identificar el perfil comercial principal de cada preventista actual.
+
+El resultado final será utilizado por el Módulo 3 para asignar una cartera de
+clientes compatible con el perfil del preventista.
+
+M1 no evalúa postulantes, no analiza CV, no recomienda contrataciones o despidos
+y no decide si un trabajador merece recibir una cartera. Todo preventista activo
+debe terminar con un perfil comercial válido antes de ejecutar M3.
+
+```text
+Streamlit
+→ extracción del PDF
+→ Bronze: texto y metadatos
+→ LLM + Pydantic
+→ Silver: métricas y evidencia estructuradas
+→ LLM para evidencia narrativa + reglas Python
+→ LLM para explicación detallada de la decisión
+→ confirmación excepcional de RR. HH.
+→ Gold: perfil comercial final
+→ M3: asignación de cartera
+```
+
+El PDF original no se almacena. Solo se conserva el texto extraído, su hash y
+los metadatos necesarios para trazabilidad.
 
 ---
 
-## 1. Propósito del módulo
+## 2. Documento de entrada
 
-El Módulo 1 analiza CVs de candidatos a preventistas usando IA para identificar su perfil comercial dominante y apoyar una mejor asignación futura a carteras de clientes.
+RR. HH. cargará un PDF por preventista. El documento corresponderá al periodo
+enero-junio de 2025 para mantener coherencia con la fecha de corte de M2:
+30 de junio de 2025.
 
-Este módulo no está pensado como un sistema puro de Recursos Humanos ni como un sistema automático de contratación. Su objetivo principal es **perfilar comercialmente al preventista** para reducir el riesgo de mala asignación, frustración temprana y rotación.
+El informe debe contener:
 
-La salida principal del módulo es una tabla de candidatos con:
+- DNI o identificador del preventista;
+- nombre del colaborador;
+- antigüedad en la empresa;
+- zona actual;
+- periodo evaluado;
+- métricas de campo con resultado y meta;
+- evaluación narrativa del supervisor;
+- fortalezas reportadas;
+- aspectos por mejorar.
 
-1. **Score de adecuación comercial al rol de preventista B2B** entre 0 y 100.
-2. **Tipo de preventista dominante**: `Hunter`, `Farmer` o `Ejecutor`.
-3. **Nivel de confianza de la clasificación**.
-4. **Riesgo de rotación o mala asignación**.
-5. **Recomendación de asignación comercial inicial**.
-6. **Explicación XAI** del resultado.
+Las métricas mínimas son:
 
-El campo clave para conectar este módulo con el Módulo 3 es:
+| Métrica | Resultado requerido |
+|---|---|
+| Cumplimiento de cuota | Porcentaje alcanzado |
+| Cobertura de ruta | Resultado y meta porcentual |
+| Retención de cartera | Resultado y meta porcentual |
+| Cuentas nuevas abiertas | Resultado y meta |
+| Reportes entregados a tiempo | Resultado y meta porcentual |
 
-```text
-salesperson_type
-```
-
----
-
-## 2. Problema de negocio
-
-La empresa presenta alta rotación de preventistas, ventas desordenadas y bajo cumplimiento de protocolos comerciales.
-
-Una causa probable es que los vendedores son evaluados de forma general, sin identificar correctamente:
-
-```text
-- qué tipo de vendedor son
-- en qué tipo de cartera podrían rendir mejor
-- qué riesgo existe si se les asigna una cartera inadecuada
-```
-
-Esto genera dos escenarios negativos:
-
-```text
-1. Un vendedor inexperto puede ser asignado a clientes valiosos y deteriorar la relación comercial.
-
-2. Un vendedor con alto potencial puede ser asignado a un nicho equivocado, frustrarse y terminar rotando.
-```
-
-Por eso, el Módulo 1 no busca decidir simplemente si alguien debe ser contratado o no. Busca responder:
-
-```text
-¿Este candidato tiene perfil comercial para preventa B2B?
-¿Qué tipo de preventista parece ser?
-¿A qué tipo de cartera conviene asignarlo inicialmente?
-¿Qué riesgo tendría una mala asignación?
-```
+Un número sin periodo o sin meta no se considera evidencia completa. La ausencia
+de información no se interpreta como bajo desempeño ni se convierte en cero.
+El informe debe corregirse antes de generar el perfil final.
 
 ---
 
-## 3. Idea central del Módulo 1
+## 3. Fuentes de evaluación
 
-El Módulo 1 transforma CVs no estructurados en información comercial estructurada.
-
-Flujo conceptual:
+Cada dimensión combina dos fuentes:
 
 ```text
-CV PDF
-→ extracción de texto
-→ estructuración del CV con LLM
-→ evaluación comercial con LLM
-→ clasificación del tipo de preventista
-→ salida explicable para Módulo 3
+70 % métricas de campo
+30 % evaluación del supervisor
 ```
 
-La pregunta principal no es:
+Las métricas tienen mayor peso porque representan resultados observados. La
+evaluación del supervisor aporta contexto y conductas que no pueden explicarse
+solo mediante números.
 
-```text
-¿Este candidato es bueno o malo?
-```
-
-Sino:
-
-```text
-¿Qué tipo de preventista es y dónde podría desempeñarse mejor?
-```
+La antigüedad se conserva como información administrativa. No aumenta el score,
+no produce un nivel y no se utiliza para excluir al preventista del matching.
 
 ---
 
-## 4. Alcance de esta versión
+## 4. Responsabilidades del LLM y Python
 
-Esta versión se enfoca únicamente en candidatos para el rol de preventista B2B en distribución de bebidas, especialmente en canal tradicional: bodegas, minimarkets y pequeños comercios.
+### 4.1 LLM de estructuración
 
-Incluye:
+El primer llamado al LLM:
 
-```text
-- lectura de CVs en PDF
-- extracción de texto
-- estructuración del CV
-- evaluación comercial
-- clasificación Hunter/Farmer/Ejecutor
-- score 0-100 de adecuación comercial
-- riesgo simple de rotación o mala asignación
-- explicación XAI
-- salida Gold para Módulo 3
-```
+- extrae únicamente cifras explícitas del informe;
+- no calcula porcentajes ni completa metas ausentes;
+- organiza la evidencia narrativa por dimensión;
+- devuelve `null` cuando una cifra no está presente;
+- no puntúa ni propone el perfil comercial;
+- produce JSON validado con Pydantic v2.
 
-No incluye:
+### 4.2 LLM de evaluación narrativa
+
+El segundo llamado al LLM califica solamente las observaciones del supervisor
+con el catálogo cerrado:
 
 ```text
-- decisión automática de contratación
-- entrevistas automatizadas
-- análisis de voz o video
-- validación psicométrica
-- predicción supervisada de renuncia
-- agente autónomo completo
-- conexión obligatoria a FastAPI
-- dashboard final
+0, 25, 50, 75, 100
 ```
+
+No utiliza las métricas para calcular estos scores y no decide el perfil final.
+
+| Score | Interpretación de la evidencia del supervisor |
+|---:|---|
+| 0 | No existe evidencia favorable para la dimensión |
+| 25 | Evidencia débil o desempeño bajo |
+| 50 | Evidencia intermedia, pero poco consistente |
+| 75 | Evidencia clara con conducta o ejemplo concreto |
+| 100 | Evidencia sólida, repetida y acompañada de resultados |
+
+### 4.3 LLM de explicación final
+
+El tercer llamado recibe únicamente resultados ya calculados por Python:
+
+- los cuatro scores finales;
+- los tres indicadores de perfil;
+- el perfil propuesto y la diferencia entre los dos líderes;
+- los scores por fuente, la evidencia y las inconsistencias detectadas;
+- el estado técnico del procesamiento.
+
+Su única salida es `explicacion_final`, validada con Pydantic v2 y limitada a
+1200 caracteres. No puede devolver ni modificar scores, estados o perfiles.
+
+En un perfil claro explica por qué ganó. En un caso cercano compara los dos
+perfiles principales, explica por qué existe la cercanía e indica qué evidencia
+debe revisar RR. HH. En una inconsistencia identifica las fuentes en conflicto y
+explica por qué se necesita criterio humano.
+
+### 4.4 Reglas Python
+
+Python:
+
+- convierte el cumplimiento de las metas en puntajes;
+- combina métricas y supervisor con pesos 70/30;
+- calcula las cuatro dimensiones;
+- compara los indicadores de perfil;
+- determina el perfil comercial cuando existe una diferencia clara;
+- detecta datos faltantes, empates e inconsistencias;
+- escribe en Gold únicamente un perfil final válido.
+
+El LLM interpreta y explica el texto. Python aplica las reglas finales.
 
 ---
 
-## 5. Estado actual heredado
+## 5. Contrato Silver
 
-El proyecto anterior ya contiene un pipeline base de CV screening.
-
-El flujo heredado realiza:
+Silver conserva una fila estructurada por informe e incluye:
 
 ```text
-1. Extracción de texto desde PDF usando pdfplumber.
-2. Estructuración del CV usando un LLM.
-3. Evaluación del candidato contra un Job Spec.
-4. Guardado de resultados en arquitectura Medallion.
-```
-
-El problema es que la evaluación heredada estaba orientada a un puesto técnico, usando dimensiones como:
-
-```text
-- skills técnicos
-- experiencia
-- educación
-- idiomas
-- fit general
-```
-
-Para el proyecto actual, esas dimensiones deben reemplazarse por criterios comerciales de preventistas:
-
-```text
-- experiencia comercial de campo
-- canal tradicional
-- prospección
-- retención de cartera
-- cobertura de ruta
-- disciplina comercial
-- comunicación con clientes
-- cumplimiento de protocolos
-```
-
----
-
-## 6. Enfoque simplificado
-
-En esta versión académica se mantiene una arquitectura simple:
-
-```text
-LLM estructura el CV
-LLM evalúa el perfil comercial
-Pydantic valida la salida
-Python orquesta el pipeline
-CSV o Supabase persiste los resultados
-```
-
-Esta versión no se presenta como un agente autónomo completo.
-
-La definición correcta es:
-
-```text
-pipeline LLM de screening y perfilamiento comercial de preventistas
-```
-
-Como trabajo futuro podría evolucionar a:
-
-```text
-agente de IA para screening, validación, perfilamiento y recomendación de asignación inicial
-```
-
----
-
-## 7. Arquitectura Medallion del Módulo 1
-
-La arquitectura mantiene tres capas:
-
-```text
-Bronze → texto crudo del CV
-Silver → CV estructurado y evaluación comercial intermedia
-Gold   → perfil comercial final listo para matching
-```
-
-### 7.1 Bronze
-
-Responsabilidad:
-
-```text
-- almacenar el texto extraído del CV
-- conservar metadatos del archivo
-- no aplicar reglas de negocio complejas
-```
-
-Tabla o archivo conceptual:
-
-```text
-bronze.cv_raw_text
-```
-
-Columnas recomendadas:
-
-```text
-raw_cv_id
-candidate_id
-filename
-file_hash
-raw_text
-num_pages
-file_size_bytes
-extraction_status
+dni
+nombre_colaborador
+antiguedad_meses_empresa
+zona_actual
+metricas_campo
+evidencia_supervisor
+processing_status
+model_name
+prompt_version
 created_at
 ```
 
-### 7.2 Silver
-
-Responsabilidad:
+`processing_status` es un estado técnico del procesamiento y solo admite:
 
 ```text
-- estructurar información del candidato
-- extraer experiencia laboral, educación y señales comerciales
-- generar scores comerciales intermedios
+valid
+needs_correction
+needs_profile_selection
 ```
 
-Tablas o archivos conceptuales:
+Este estado no es un perfil comercial y no se envía a M3.
+
+### 5.1 Métricas de campo
+
+`metricas_campo` contiene:
 
 ```text
-silver.candidates_structured
-silver.candidates_evaluated
+periodo_inicio
+periodo_fin
+periodo_meses
+cumplimiento_cuota_pct
+cobertura_ruta_pct
+meta_cobertura_ruta_pct
+retencion_cartera_pct
+meta_retencion_cartera_pct
+cuentas_nuevas_abiertas
+meta_cuentas_nuevas
+reportes_a_tiempo_pct
+meta_reportes_a_tiempo_pct
 ```
 
-### 7.3 Gold
+### 5.2 Evidencia del supervisor
 
-Responsabilidad:
-
-```text
-- generar salida final para el Módulo 3
-- definir score total de adecuación comercial
-- definir salesperson_type
-- explicar la decisión
-- marcar riesgo de rotación o mala asignación
-```
-
-Tabla o archivo conceptual:
+`evidencia_supervisor` separa las observaciones de:
 
 ```text
-gold.candidates_final
-```
-
----
-
-## 8. Inputs del Módulo 1
-
-### 8.1 CVs en PDF
-
-Entrada principal:
-
-```text
-data/m1/raw_cvs/*.pdf
-```
-
-Cada PDF representa un candidato.
-
-### 8.2 Job Spec comercial
-
-El Job Spec debe describir el rol objetivo:
-
-```text
-Preventista B2B para distribución de bebidas en canal tradicional.
-```
-
-Debe incluir criterios como:
-
-```text
-- ventas de campo
-- canal tradicional
-- bodegas y minimarkets
-- gestión de ruta
-- apertura de clientes
-- retención de cartera
-- cobertura diaria
-- cumplimiento de cuota
-- cobranza
-- comunicación comercial
-- cumplimiento de protocolos
+captacion
+fidelizacion
+cobertura_ruta
+disciplina_comunicacion
+fortalezas_reportadas
+aspectos_mejora_reportados
 ```
 
 ---
 
-## 9. Tipos de preventista
+## 6. Dimensiones y puntajes
 
-El campo principal para conectar Módulo 1 con Módulo 3 es:
-
-```text
-salesperson_type
-```
-
-Valores permitidos:
+Las cuatro dimensiones son:
 
 ```text
-Hunter
-Farmer
-Ejecutor
+score_captacion
+score_fidelizacion
+score_cobertura_ruta
+score_disciplina_comunicacion
 ```
 
-### 9.1 Hunter
-
-Perfil orientado a prospección, apertura y reactivación.
-
-Señales típicas en el CV:
+Para cada dimensión:
 
 ```text
-- apertura de clientes nuevos
-- prospección
-- venta fría
-- captación de cartera
-- expansión territorial
-- reactivación de clientes
-- cumplimiento agresivo de cuotas
+score_dimension =
+    0.70 × score_metrica
+  + 0.30 × score_supervisor
 ```
 
-Asignación comercial recomendada:
+El cumplimiento de una meta se convierte a la escala cerrada:
+
+| Cumplimiento | Score métrico |
+|---:|---:|
+| 0 % | 0 |
+| Mayor que 0 % y menor que 70 % | 25 |
+| Desde 70 % y menor que 90 % | 50 |
+| Desde 90 % y menor que 105 % | 75 |
+| 105 % o más | 100 |
+
+La dimensión de disciplina y comunicación utiliza el cumplimiento de cuota y
+los reportes entregados a tiempo. Primero se obtiene el score métrico de cada
+indicador y luego se calcula su promedio.
 
 ```text
-- clientes Nuevo
-- clientes Bronce
+score_metrica_disciplina =
+    (score_cumplimiento_cuota + score_reportes_a_tiempo) / 2
 ```
 
-Riesgo si se asigna mal:
+Si falta una métrica o una meta obligatoria, la dimensión correspondiente no se
+calcula y el informe queda en `needs_correction`.
 
-```text
-Puede ser demasiado agresivo o poco relacional para cuentas Diamante.
-```
-
-### 9.2 Farmer
-
-Perfil orientado a retención, fidelización y desarrollo de cartera.
-
-Señales típicas en el CV:
-
-```text
-- gestión de cartera
-- seguimiento a clientes recurrentes
-- fidelización
-- incremento de ticket
-- cross-selling
-- up-selling
-- desarrollo de cuentas
-- relación comercial estable
-```
-
-Asignación comercial recomendada:
-
-```text
-- clientes Diamante
-- clientes Oro
-```
-
-Riesgo si se asigna mal:
-
-```text
-Puede frustrarse si se le asigna una cartera débil que no aprovecha su capacidad de desarrollo comercial.
-```
-
-### 9.3 Ejecutor
-
-Perfil orientado a cobertura, disciplina de ruta y operación comercial.
-
-Señales típicas en el CV:
-
-```text
-- cumplimiento de rutas
-- visitas diarias
-- cobertura de zona
-- ejecución en punto de venta
-- toma de pedidos
-- cumplimiento de protocolo
-- orden operativo
-- venta de volumen
-```
-
-Asignación comercial recomendada:
-
-```text
-- clientes Plata
-```
-
-Riesgo si se asigna mal:
-
-```text
-Puede no ser el mejor perfil para negociar cuentas grandes ni para abrir agresivamente clientes nuevos.
-```
+No se calcula un score total porque el objetivo de M1 es identificar la fortaleza
+comercial principal, no clasificar a los trabajadores por nivel de desempeño.
 
 ---
 
-## 10. Variables comerciales a extraer
+## 7. Perfiles comerciales
 
-Además de los campos básicos del CV, el Módulo 1 debe extraer señales comerciales útiles para clasificar al candidato.
+M1 utiliza solamente tres perfiles finales:
 
-Campos básicos:
-
-```text
-candidate_name
-email
-phone
-location
-summary_profile
-commercial_experience_years
-last_position
-last_company
-education_level
-education_career
-education_institution
-```
-
-Campos comerciales específicos:
-
-```text
-field_sales_experience
-traditional_channel_experience
-route_management_experience
-new_account_opening_experience
-client_retention_experience
-portfolio_management_experience
-collection_experience
-daily_visits_experience
-sales_quota_experience
-point_of_sale_execution_experience
-commercial_tools
-sales_kpis_mentioned
-```
-
-Campos de evidencia:
-
-```text
-experience_detail
-education_detail
-commercial_evidence
-```
-
----
-
-## 11. Evaluación comercial
-
-La evaluación no debe centrarse en skills técnicos.
-
-Dimensiones recomendadas:
-
-```text
-score_commercial_experience
-score_traditional_channel
-score_prospecting
-score_retention
-score_route_coverage
-score_discipline_protocol
-score_communication
-score_fit_preventista
-```
-
-Cada score debe estar entre:
-
-```text
-0 y 100
-```
-
-Interpretación:
-
-```text
-0   = sin evidencia
-50  = evidencia parcial
-100 = evidencia fuerte y directamente relacionada
-```
-
----
-
-## 12. Score total de adecuación comercial
-
-El `score_total` mide el ajuste general del candidato al rol de preventista B2B.
-
-No representa una decisión de contratación automática. Representa una medida de adecuación comercial para orientar el perfilamiento y la asignación posterior.
-
-Pesos recomendados para versión simple:
-
-| Dimensión | Peso |
-|---|---:|
-| Experiencia comercial | 25% |
-| Canal tradicional | 20% |
-| Prospección | 15% |
-| Retención de cartera | 15% |
-| Cobertura de ruta | 15% |
-| Disciplina y comunicación | 10% |
-
-Fórmula conceptual:
-
-```text
-score_total =
-    0.25 * score_commercial_experience
-  + 0.20 * score_traditional_channel
-  + 0.15 * score_prospecting
-  + 0.15 * score_retention
-  + 0.15 * score_route_coverage
-  + 0.10 * score_discipline_communication
-```
-
-El score total debe expresarse en escala:
-
-```text
-0-100
-```
-
----
-
-## 13. Nivel de preparación para asignación
-
-En lugar de usar una recomendación de contratación, esta versión usa un campo operativo:
-
-```text
-assignment_readiness
-```
-
-Este campo indica qué tan preparado está el candidato para recibir una cartera comercial.
-
-Valores permitidos:
-
-```text
-requiere_revision
-requiere_acompanamiento
-apto_operativo
-apto_cartera_critica
-```
-
-Interpretación:
-
-```text
-requiere_revision:
-    información insuficiente, perfil ambiguo o score bajo.
-
-requiere_acompanamiento:
-    candidato con potencial, pero necesita supervisión inicial.
-
-apto_operativo:
-    candidato adecuado para cartera regular según su perfil.
-
-apto_cartera_critica:
-    candidato con alta adecuación comercial y confianza suficiente para cartera sensible.
-```
-
-Regla orientativa:
-
-```text
-score_total < 50:
-    assignment_readiness = "requiere_revision"
-
-50 <= score_total < 70:
-    assignment_readiness = "requiere_acompanamiento"
-
-70 <= score_total < 85:
-    assignment_readiness = "apto_operativo"
-
-score_total >= 85:
-    assignment_readiness = "apto_cartera_critica"
-```
-
-Esta regla puede ajustarse según criterio comercial.
-
----
-
-## 14. Clasificación de salesperson_type
-
-El LLM debe clasificar al candidato como:
-
-```text
-Hunter | Farmer | Ejecutor
-```
-
-La clasificación debe basarse en evidencia del CV.
-
-Además, debe devolver:
-
-```text
-salesperson_type_confidence
-```
-
-Rango:
-
-```text
-0.00 a 1.00
-```
-
-Interpretación:
-
-```text
-0.00-0.59 → baja confianza
-0.60-0.79 → confianza media
-0.80-1.00 → confianza alta
-```
-
-Regla simple:
-
-```text
-Si salesperson_type_confidence < 0.60:
-    requires_human_review = True
-```
-
----
-
-## 15. Riesgo de rotación o mala asignación
-
-El Módulo 1 debe incluir una alerta simple de riesgo.
-
-Campo:
-
-```text
-rotation_risk_level
-```
-
-Valores permitidos:
-
-```text
-bajo
-medio
-alto
-```
-
-Criterios orientativos:
-
-```text
-bajo:
-    experiencia comercial clara
-    perfil coherente
-    buena confianza en la clasificación
-    señales de estabilidad laboral
-
-medio:
-    experiencia parcial
-    perfil comercial mixto
-    poca evidencia de canal tradicional
-    candidato junior
-
-alto:
-    baja experiencia
-    perfil ambiguo
-    cambios laborales frecuentes
-    baja confianza en salesperson_type
-    poca evidencia de venta de campo
-```
-
-Este campo no reemplaza evaluación humana. Sirve como alerta operativa para evitar asignaciones de alto riesgo.
-
----
-
-## 16. Explicabilidad XAI
-
-La salida debe incluir explicación en lenguaje natural.
-
-Campo:
-
-```text
-xai_explanation
-```
-
-Debe responder:
-
-```text
-- por qué recibió ese score
-- por qué fue clasificado como Hunter/Farmer/Ejecutor
-- qué evidencia del CV respalda la decisión
-- qué riesgos o brechas existen
-- qué asignación inicial sería más razonable
-```
-
-Restricciones:
-
-```text
-No inventar experiencia.
-No usar justificaciones genéricas.
-Toda explicación debe basarse en evidencia del CV.
-```
-
-Ejemplo correcto:
-
-```text
-El candidato se clasifica como Farmer porque muestra experiencia en gestión de cartera, seguimiento de clientes recurrentes y desarrollo comercial. Presenta menor evidencia de apertura agresiva de cuentas nuevas, por lo que no se prioriza como Hunter.
-```
-
-Ejemplo incorrecto:
-
-```text
-El candidato tiene buen perfil comercial y puede vender bien.
-```
-
----
-
-## 17. Schema conceptual de salida Silver estructurada
-
-Tabla o archivo:
-
-```text
-silver.candidates_structured
-```
-
-Columnas recomendadas:
-
-```text
-candidate_id
-raw_cv_id
-candidate_name
-email
-phone
-location
-summary_profile
-commercial_experience_years
-last_position
-last_company
-education_level
-education_career
-education_institution
-field_sales_experience
-traditional_channel_experience
-route_management_experience
-new_account_opening_experience
-client_retention_experience
-portfolio_management_experience
-collection_experience
-daily_visits_experience
-sales_quota_experience
-point_of_sale_execution_experience
-commercial_tools
-sales_kpis_mentioned
-experience_detail
-education_detail
-commercial_evidence
-```
-
----
-
-## 18. Schema conceptual de evaluación Silver
-
-Tabla o archivo:
-
-```text
-silver.candidates_evaluated
-```
-
-Columnas recomendadas:
-
-```text
-candidate_id
-score_commercial_experience
-score_traditional_channel
-score_prospecting
-score_retention
-score_route_coverage
-score_discipline_communication
-score_fit_preventista
-strengths
-gaps
-risks
-raw_llm_evaluation
-```
-
----
-
-## 19. Schema conceptual de salida Gold
-
-Tabla o archivo:
-
-```text
-gold.candidates_final
-```
-
-Columnas recomendadas:
-
-```text
-candidate_id
-candidate_name
-score_total
-assignment_readiness
-salesperson_type
-salesperson_type_confidence
-commercial_seniority
-rotation_risk_level
-recommended_assignment
-requires_human_review
-xai_explanation
-strengths
-gaps
-risks
-created_at
-```
-
-Valores esperados:
-
-```text
-salesperson_type ∈ {Hunter, Farmer, Ejecutor}
-
-assignment_readiness ∈ {
-    requiere_revision,
-    requiere_acompanamiento,
-    apto_operativo,
-    apto_cartera_critica
-}
-
-rotation_risk_level ∈ {bajo, medio, alto}
-
-recommended_assignment ∈ {
-    Diamante/Oro,
-    Plata,
-    Bronce/Nuevo,
-    Revisión humana
-}
-```
-
----
-
-## 20. Relación con el Módulo 3
-
-El Módulo 3 no necesita todo el CV.
-
-Solo necesita desde Módulo 1:
-
-```text
-candidate_id
-candidate_name
-score_total
-assignment_readiness
-salesperson_type
-salesperson_type_confidence
-rotation_risk_level
-```
-
-El campo clave es:
-
-```text
-salesperson_type
-```
-
-El Módulo 2 entrega:
-
-```text
-client_id
-cluster_label
-score_lrfmv_0_100
-is_churn_risk
-```
-
-Entonces el Módulo 3 cruza:
-
-```text
-salesperson_type × cluster_label
-```
-
-Ejemplos:
-
-```text
-Farmer + Diamante → óptimo
-Farmer + Oro      → óptimo
-Ejecutor + Plata  → óptimo
-Hunter + Bronce   → óptimo
-Hunter + Nuevo    → óptimo
-```
-
----
-
-## 21. Matriz conceptual de asignación futura
-
-Referencia para Módulo 3:
-
-| Cluster cliente | Preventista recomendado | Justificación |
+| Valor interno | Nombre visible | Indicador comparado |
 |---|---|---|
-| Diamante | Farmer | Retención y protección de cartera valiosa |
-| Oro | Farmer | Desarrollo y fidelización |
-| Plata | Ejecutor | Cobertura operativa y volumen |
-| Bronce | Hunter | Reactivación selectiva |
-| Nuevo | Hunter | Prospección y onboarding |
+| `captacion` | Captación de clientes | `score_captacion` |
+| `fidelizacion` | Fidelización de cartera | `score_fidelizacion` |
+| `ejecucion_campo` | Ejecución en campo | Promedio de cobertura y disciplina |
 
-El Módulo 1 no ejecuta el matching. Solo entrega el perfil comercial del candidato.
-
----
-
-## 22. Prompts necesarios
-
-Esta versión requiere dos prompts principales.
-
-### 22.1 Prompt de estructuración
-
-Objetivo:
+El indicador de ejecución en campo se calcula así:
 
 ```text
-Extraer información del CV y devolver un JSON estructurado.
+indicador_ejecucion =
+    (score_cobertura_ruta + score_disciplina_comunicacion) / 2
 ```
 
-Debe enfocarse en:
+Python compara:
 
 ```text
-- datos personales básicos
-- experiencia laboral
-- educación
-- señales comerciales
-- experiencia en ventas de campo
-- canal tradicional
-- rutas
-- cartera
-- prospección
-- retención
+score_captacion
+score_fidelizacion
+indicador_ejecucion
 ```
 
-Restricción:
+El indicador mayor determina el perfil comercial.
+
+`perfil_comercial` solo puede contener:
 
 ```text
-No evaluar.
-No opinar.
-No inventar.
-Solo extraer evidencia del CV.
+captacion
+fidelizacion
+ejecucion_campo
 ```
 
-### 22.2 Prompt de evaluación comercial
-
-Objetivo:
+No se permiten como perfiles:
 
 ```text
-Evaluar el ajuste del candidato al rol de preventista B2B y clasificar su perfil comercial dominante.
-```
-
-Debe devolver:
-
-```text
-- scores comerciales
-- score_total
-- assignment_readiness
-- salesperson_type
-- salesperson_type_confidence
-- rotation_risk_level
-- recommended_assignment
-- xai_explanation
-- strengths
-- gaps
-- risks
-```
-
-Restricción:
-
-```text
-Evaluar solo con evidencia del CV estructurado.
-Si falta evidencia, penalizar o marcar incertidumbre.
+pendiente
+sin_asignar
+ambiguo
+en_desarrollo
 ```
 
 ---
 
-## 23. Validaciones mínimas
+## 8. Resolución de casos excepcionales
 
-El pipeline debe validar:
+La intervención de RR. HH. ocurre antes de guardar el resultado en Gold.
 
-```text
-1. Que el PDF tenga texto extraíble.
-2. Que el JSON de estructuración cumpla el schema.
-3. Que el JSON de evaluación cumpla el schema.
-4. Que score_total esté entre 0 y 100.
-5. Que salesperson_type sea Hunter, Farmer o Ejecutor.
-6. Que assignment_readiness sea uno de los valores permitidos.
-7. Que confidence esté entre 0 y 1.
-8. Que exista xai_explanation.
-```
+### 8.1 Perfil claro
 
-Reglas simples:
+Si la diferencia entre los dos indicadores principales es mayor que 10 puntos,
+Python asigna automáticamente el perfil y lo guarda en Gold.
 
-```text
-Si texto_extraido está vacío:
-    extraction_status = failed
-    no evaluar
+### 8.2 Perfil cercano o empate
 
-Si JSON inválido:
-    validation_status = failed
+Si la diferencia entre los dos indicadores principales es menor o igual que
+10 puntos, Silver registra `needs_profile_selection`.
 
-Si salesperson_type_confidence < 0.60:
-    requires_human_review = True
+La aplicación muestra los tres indicadores y la evidencia. RR. HH. selecciona
+uno de los tres perfiles permitidos. Después de esa selección, el resultado se
+guarda en Gold.
 
-Si score_total < 50:
-    assignment_readiness = requiere_revision
-```
+No se guarda `ambiguo`, `pendiente` ni `sin_asignar` como perfil.
 
----
+### 8.3 Información incompleta
 
-## 24. Outputs esperados
+Si falta una métrica, meta, DNI válido, periodo o evidencia obligatoria, Silver
+registra `needs_correction`.
 
-Para versión local:
+RR. HH. debe corregir o volver a cargar el informe. No se escribe una evaluación
+incompleta en Gold.
 
-```text
-outputs/m1/bronze/cv_raw_text.csv
-outputs/m1/silver/candidates_structured.csv
-outputs/m1/silver/candidates_evaluated.csv
-outputs/m1/gold/candidates_final.csv
-```
+### 8.4 Inconsistencia entre fuentes
 
-Para versión con Supabase:
+Si la diferencia entre el score métrico y el score del supervisor es de 50
+puntos o más, la aplicación muestra una advertencia antes de finalizar.
 
-```text
-bronze.cv_raw_text
-silver.candidates_structured
-silver.candidates_evaluated
-gold.candidates_final
-```
+RR. HH. revisa la evidencia y confirma uno de los tres perfiles permitidos. La
+advertencia no crea un cuarto perfil ni un estado permanente en Gold.
 
 ---
 
-## 25. Flujo final del pipeline
+## 9. Contrato Gold simplificado
+
+Gold mantiene un perfil comercial final y vigente por preventista:
 
 ```text
-1. Leer PDFs de candidatos.
-
-2. Extraer texto con pdfplumber.
-
-3. Guardar texto crudo y metadatos en Bronze.
-
-4. Enviar texto al LLM para estructuración.
-
-5. Validar salida con Pydantic.
-
-6. Guardar CV estructurado en Silver.
-
-7. Enviar CV estructurado + Job Spec comercial al LLM para evaluación.
-
-8. Validar evaluación con Pydantic.
-
-9. Calcular o confirmar score_total.
-
-10. Clasificar salesperson_type.
-
-11. Definir assignment_readiness.
-
-12. Marcar riesgo de rotación o mala asignación.
-
-13. Marcar revisión humana si corresponde.
-
-14. Guardar salida final en Gold.
-
-15. Exportar gold.candidates_final para Módulo 3.
+employee_id
+employee_name
+zona_actual
+score_captacion
+score_fidelizacion
+score_cobertura_ruta
+score_disciplina_comunicacion
+perfil_comercial
+fortalezas
+aspectos_mejora
+explicacion_final
+evaluated_at
 ```
+
+Reglas de Gold:
+
+- una fila vigente por `employee_id`;
+- actualización mediante `upsert`;
+- las cuatro dimensiones deben estar calculadas;
+- `perfil_comercial` debe pertenecer al catálogo permitido;
+- no se guardan perfiles pendientes o incompletos;
+- no se guarda nivel de asignación;
+- no se guarda elegibilidad para M3;
+- no se guarda un flujo de aprobación o rechazo.
+- `explicacion_final` es obligatoria y admite como máximo 1200 caracteres.
+
+La interfaz principal mostrará:
+
+- perfil comercial final;
+- fortalezas principales;
+- aspectos por mejorar;
+- explicación basada en métricas y evidencia.
 
 ---
 
-## 26. Decisiones cerradas
+## 10. Relación simple con M3
+
+M3 consume únicamente perfiles finales de Gold:
+
+```text
+employee_id
+employee_name
+zona_actual
+perfil_comercial
+```
+
+La relación inicial entre M1 y M2 será:
+
+| Cluster predominante de la cartera | Perfil preferido |
+|---|---|
+| Diamante y Oro | Fidelización |
+| Plata | Ejecución en campo |
+| Bronce y Nuevo | Captación |
+
+Captación significa capacidad para conseguir cuentas nuevas y desarrollar
+clientes recientes o poco consolidados.
+
+M1 no bloquea preventistas ni decide qué cartera recibe cada uno. M3 realizará
+la asignación final y deberá entregar una cartera a cada preventista activo.
+
+Para el proyecto se asumirá que, antes de ejecutar M3, todos los preventistas
+activos tienen un perfil comercial válido en Gold.
+
+---
+
+## 11. Contrato Medallion
+
+M1 comparte los esquemas `bronze`, `silver` y `gold` de la misma instancia de
+Supabase utilizada por M2, pero usa tablas propias:
+
+```text
+bronze.raw_informe_preventista
+silver.perfil_preventista_estructurado
+gold.preventistas_evaluados
+```
+
+Bronze conserva una fila por carga, incluso si falla la extracción o validación.
+Silver conserva el historial de informes estructurados y sus estados técnicos.
+Gold mantiene solamente perfiles comerciales finales.
+
+Las tablas anteriores de CV no se reutilizarán silenciosamente. El cambio debe
+implementarse mediante una migración SQL.
+
+---
+
+## 12. Flujo de Streamlit
+
+La aplicación tendrá dos acciones principales:
+
+1. **Cargar informe interno:** valida el PDF, extrae el texto, calcula el hash y
+   guarda Bronze.
+2. **Evaluar preventista:** estructura el informe, valida con Pydantic, aplica el
+   LLM narrativo, ejecuta las reglas Python y genera la explicación detallada.
+   Silver registra el estado; Gold se escribe solo cuando el perfil es final.
+
+Después de evaluar:
+
+```text
+Perfil claro
+→ guardar automáticamente en Gold
+
+Perfil cercano o empate
+→ RR. HH. selecciona uno de los tres perfiles
+→ guardar en Gold
+
+Información incompleta
+→ solicitar corrección
+→ no guardar en Gold
+```
+
+No existirán botones de aprobar o rechazar. La acción excepcional será
+únicamente seleccionar el perfil o corregir el informe.
+
+---
+
+## 13. Pruebas de aceptación
+
+Se deben validar como mínimo:
+
+- PDF válido, vacío, dañado o sin texto extraíble;
+- DNI ausente, no numérico o con longitud incorrecta;
+- fechas del periodo válidas y ordenadas;
+- métricas y metas dentro de rangos permitidos;
+- ausencia de una métrica sin convertirla en cero;
+- cálculo 70 % métricas y 30 % supervisor;
+- catálogo narrativo `0, 25, 50, 75, 100`;
+- límites de cumplimiento `70 %`, `90 %` y `105 %`;
+- perfil de captación;
+- perfil de fidelización;
+- perfil de ejecución en campo;
+- diferencia mayor que 10 para asignación automática;
+- diferencia menor o igual que 10 para selección de RR. HH.;
+- corrección obligatoria cuando falta información;
+- advertencia cuando las fuentes difieren en 50 puntos o más;
+- explicación final de hasta 1200 caracteres sin campos de decisión;
+- comparación causal de los perfiles líderes cuando existe empate o cercanía;
+- fallo técnico del tercer LLM sin escritura en Gold;
+- imposibilidad de guardar un perfil fuera del catálogo;
+- ausencia de valores `pendiente` o `sin_asignar` en Gold;
+- persistencia Bronze → Silver → Gold;
+- reejecución sin duplicar el perfil vigente en Gold.
+
+---
+
+## 14. Ejecución prevista
+
+La implementación mantiene:
+
+```text
+Streamlit
+pdfplumber
+LLM
+Pydantic v2
+Python
+Supabase/PostgreSQL
+```
+
+Variables de entorno:
+
+```text
+SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY
+GITHUB_TOKEN
+M1_LLM_MODEL
+```
+
+Estas variables se cargan desde `modules/m1_CV/.env`. M2 utiliza su propio
+archivo `modules/m2_lrfmv/.env`; no se comparte un `.env` en la raíz.
+
+Las credenciales no se escriben en el código, la interfaz ni los logs. La clave
+de servicio solo se utiliza desde el servidor de Streamlit.
+
+---
+
+## 15. Fuera de alcance
+
+- análisis de CV o selección de postulantes;
+- recomendación de contratación o despido;
+- clasificación por nivel de asignación;
+- exclusión automática de preventistas activos;
+- predicción de renuncia;
+- cálculo automático de métricas desde sistemas externos;
+- seguimiento completo del desempeño laboral;
+- modificación automática de carteras;
+- matching o Método Húngaro dentro de M1;
+- almacenamiento del PDF original.
+
+M1 termina cuando entrega a Gold uno de los tres perfiles comerciales válidos.
+M3 utilizará ese perfil para asignar una cartera a cada preventista.
+
+---
+
+## 16. Decisiones cerradas
 
 | Decisión | Estado |
 |---|---|
-| M1 se enfoca en perfilamiento comercial de preventistas B2B | Cerrado |
-| M1 no se presenta como sistema puro de Recursos Humanos | Cerrado |
-| M1 no entrega recomendación automática de contratación | Cerrado |
-| El campo clave para M3 es `salesperson_type` | Cerrado |
-| Tipos permitidos: Hunter, Farmer, Ejecutor | Cerrado |
-| Se mantiene score 0-100 de adecuación comercial | Cerrado |
-| Se reemplaza `hire_cluster` por `assignment_readiness` | Cerrado |
-| Se incluye explicación XAI | Cerrado |
-| Se incluye riesgo simple de rotación o mala asignación | Cerrado |
-| Se usa LLM para estructurar CV | Cerrado |
-| Se usa LLM para evaluar perfil comercial | Cerrado |
-| Pydantic valida las salidas | Cerrado |
-| M1 no ejecuta matching | Cerrado |
-| M1 alimenta a M3 mediante Gold | Cerrado |
-| No se presenta como agente autónomo completo | Cerrado |
-
----
-
-## 27. Límites de alcance
-
-Esta versión no incluye:
-
-```text
-- agente autónomo completo
-- múltiples agentes especializados
-- entrevistas por voz
-- análisis emocional
-- predicción supervisada de renuncia
-- validación con datos reales de RRHH
-- decisión automática de contratación
-- conexión obligatoria a FastAPI
-- deployment productivo
-- dashboard final
-```
-
-Estos puntos pueden mencionarse como trabajo futuro.
-
----
-
-## 28. Trabajo futuro
-
-Mejoras posibles:
-
-```text
-1. Separar extracción con LLM y scoring determinístico en Python.
-2. Agregar critic interno para revisar inconsistencias.
-3. Reintentar automáticamente cuando el JSON sea inválido.
-4. Agregar revisión humana para perfiles ambiguos.
-5. Convertir el pipeline en agente con LangGraph.
-6. Usar historial real de desempeño y rotación para validar el score.
-7. Incorporar entrevistas estructuradas como fuente adicional.
-8. Ajustar pesos del score con expertos comerciales o AHP.
-```
-
----
-
-## 29. Respuesta para defensa
-
-> El Módulo 1 aborda la alta rotación de preventistas desde una perspectiva de ajuste comercial. No se limita a rankear candidatos ni a emitir una recomendación de contratación, sino que analiza CVs con IA para identificar el perfil dominante del vendedor: Hunter, Farmer o Ejecutor. Esta clasificación permite anticipar en qué tipo de cartera podría desempeñarse mejor cada persona. Un vendedor inexperto asignado a clientes valiosos puede deteriorar la relación comercial, mientras que un vendedor de alto potencial ubicado en una cartera incorrecta puede frustrarse y rotar. Por ello, el módulo genera un score de adecuación comercial, una explicación XAI, una alerta de riesgo de mala asignación y el campo clave `salesperson_type`, que luego será usado por el Módulo 3 para asignar preventistas a clientes según compatibilidad comercial.
-
----
-
-## 30. Idea central
-
-El Módulo 1 debe demostrar que la rotación no es solo un problema de contratación.
-
-También es un problema de asignación.
-
-Por eso, la salida más importante no es solo:
-
-```text
-score_total
-```
-
-Sino:
-
-```text
-salesperson_type
-```
-
-Porque el objetivo final es:
-
-```text
-perfilar mejor + asignar mejor + reducir frustración + proteger clientes valiosos
-```
+| La entrada es un informe interno de RR. HH. | Cerrado |
+| El CV queda fuera de M1 | Cerrado |
+| Se mantienen cuatro dimensiones | Cerrado |
+| Métricas 70 % y supervisor 30 % | Cerrado |
+| Solo existen tres perfiles comerciales | Cerrado |
+| Se elimina el nivel de asignación | Cerrado |
+| Se elimina el score total | Cerrado |
+| Se eliminan `m3_eligible` y estados de revisión de Gold | Cerrado |
+| Los casos ambiguos se resuelven antes de Gold | Cerrado |
+| Los informes incompletos se corrigen antes de Gold | Cerrado |
+| Todo preventista activo tendrá un perfil final | Cerrado |
+| M3 asignará una cartera a cada preventista | Cerrado |

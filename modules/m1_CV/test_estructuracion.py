@@ -1,55 +1,41 @@
-import os
+"""Prueba manual de extracción y estructuración con el primer LLM."""
+
 import glob
 import json
-from main import extraer_texto_pdf, estructurar_cv
+import os
 
-def test_estructuracion():
-    # Buscar PDFs de prueba dentro del módulo.
+from main import (
+    PERIODO_FIN,
+    PERIODO_INICIO,
+    PERIODO_MESES,
+    extraer_texto_pdf,
+    estructurar_informe,
+)
+
+
+def test_estructuracion() -> None:
     archivos_pdf = glob.glob(os.path.join("tests", "pdfs", "*.pdf"))
-    
     if not archivos_pdf:
-        print("[-] No se encontraron archivos PDF en la carpeta actual.")
+        print("[-] No se encontraron informes PDF en tests/pdfs.")
         return
 
-    print(f"[*] Se encontraron {len(archivos_pdf)} archivo(s) PDF: {', '.join(archivos_pdf)}\n")
-
-    for ruta_al_pdf in archivos_pdf:
-        print(f"\n[*] --- Procesando: {ruta_al_pdf} ---")
-        
-        # 1. Extraer el texto
-        print("[*] Paso 1: Extrayendo texto...")
-        texto, num_paginas = extraer_texto_pdf(ruta_al_pdf)
-        
+    for ruta_pdf in archivos_pdf:
+        texto, paginas = extraer_texto_pdf(ruta_pdf)
         if not texto:
-            print(f"[-] No se pudo extraer texto de {ruta_al_pdf}. Saltando al siguiente.")
+            print(f"[-] El informe {ruta_pdf} no contiene texto extraíble.")
             continue
-            
-        print(f"[+] Texto extraído. Longitud: {len(texto)} caracteres. Páginas: {num_paginas}.")
-        
-        # 2. Estructurar el CV
-        print("[*] Paso 2: Ejecutando estructurar_cv()...")
-        resultado_json = estructurar_cv(texto)
-        
-        print("\n" + "="*50)
-        print(f"--- RESULTADO ESTRUCTURADO ({ruta_al_pdf}) ---")
-        print("="*50)
-        
-        # Mostrar el resultado JSON de manera más bonita y legible
-        print(json.dumps(resultado_json, indent=4, ensure_ascii=False))
-        
-        print("="*50 + "\n")
-        
-        # 3. Guardar el resultado en un archivo JSON
-        os.makedirs(os.path.join("tests", "outputs"), exist_ok=True)
-        nombre_base = os.path.splitext(os.path.basename(ruta_al_pdf))[0]
-        nombre_archivo_json = os.path.join("tests", "outputs", f"{nombre_base}_estructurado.json")
-        
-        try:
-            with open(nombre_archivo_json, 'w', encoding='utf-8') as f:
-                json.dump(resultado_json, f, indent=4, ensure_ascii=False)
-            print(f"[+] Resultado guardado exitosamente en: {nombre_archivo_json}")
-        except Exception as e:
-            print(f"[-] Error al guardar el archivo JSON: {e}")
+
+        perfil = estructurar_informe(
+            texto,
+            periodo_inicio=PERIODO_INICIO,
+            periodo_fin=PERIODO_FIN,
+            periodo_meses=PERIODO_MESES,
+        )
+        perfil_visible = dict(perfil)
+        perfil_visible["dni"] = f"****{perfil['dni'][-4:]}"
+        print(f"[+] {ruta_pdf}: {paginas} página(s)")
+        print(json.dumps(perfil_visible, indent=2, ensure_ascii=False))
+
 
 if __name__ == "__main__":
     test_estructuracion()

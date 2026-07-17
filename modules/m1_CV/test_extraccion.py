@@ -1,18 +1,9 @@
 import os
 import glob
-import sys
 import json
 import hashlib
 from datetime import datetime
 from main import extraer_texto_pdf
-
-
-def imprimir_seguro(texto: str) -> None:
-    """
-    Evita errores de encoding en consolas Windows con caracteres especiales del PDF.
-    """
-    sys.stdout.buffer.write(texto.encode("utf-8", errors="replace"))
-    sys.stdout.buffer.write(b"\n")
 
 
 def calcular_hash_archivo(ruta_archivo: str) -> str:
@@ -28,7 +19,7 @@ def guardar_resultado_extraccion(ruta_pdf: str, texto: str, num_paginas: int) ->
     os.makedirs(output_dir, exist_ok=True)
 
     resultado = {
-        "schema_version": "m1_cv_extraction_test_v1",
+        "schema_version": "m1_informe_extraction_test_v2",
         "filename": os.path.basename(ruta_pdf),
         "source_path": ruta_pdf,
         "file_hash": calcular_hash_archivo(ruta_pdf),
@@ -39,7 +30,9 @@ def guardar_resultado_extraccion(ruta_pdf: str, texto: str, num_paginas: int) ->
         "extracted_text": texto,
     }
 
-    output_path = os.path.join(output_dir, f"{nombre_base}_extraccion_{timestamp_archivo}.json")
+    output_path = os.path.join(
+        output_dir, f"{nombre_base}_extraccion_{timestamp_archivo}.json"
+    )
     with open(output_path, "w", encoding="utf-8") as archivo:
         json.dump(resultado, archivo, indent=4, ensure_ascii=False)
 
@@ -54,7 +47,10 @@ def test_extraccion():
         print("[-] No se encontraron archivos PDF en la carpeta actual.")
         return
 
-    print(f"[*] Se encontraron {len(archivos_pdf)} archivo(s) PDF: {', '.join(archivos_pdf)}\n")
+    print(
+        f"[*] Se encontraron {len(archivos_pdf)} archivo(s) PDF: "
+        f"{', '.join(archivos_pdf)}\n"
+    )
 
     for ruta_al_pdf in archivos_pdf:
         print(f"[*] Iniciando prueba de extracción para: {ruta_al_pdf}...")
@@ -69,7 +65,10 @@ def test_extraccion():
         print(f"--- JSON: {output_path} ---")
         print("="*40 + "\n")
         
-        imprimir_seguro(texto)
+        print(
+            f"Texto extraído: {len(texto)} caracteres "
+            "(contenido no mostrado por privacidad)."
+        )
         
         print("\n" + "="*40)
         print(f"--- FIN DEL TEXTO EXTRAÍDO ({ruta_al_pdf}) ---")

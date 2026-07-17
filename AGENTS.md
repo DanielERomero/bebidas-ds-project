@@ -33,7 +33,7 @@ El sistema busca resolver tres problemas de negocio:
 
 El proyecto está organizado en módulos:
 
-* Módulo 1: perfilamiento comercial de preventistas con IA a partir de CVs.
+* Módulo 1: perfilamiento comercial de preventistas activos desde informes internos.
 * Módulo 2: scoring LRFMV, segmentación de clientes y churn.
 * Módulo 3: matching preventista × cliente.
 
@@ -63,57 +63,48 @@ Los notebooks quedan como apoyo exploratorio o material de defensa, no como pipe
 This repository contains a bebidas customer analytics/data science project organized by module.
 
 * `README.md` explains the main `uv` workflow for the M2 analytics module.
-* `modules/m1_CV/` contains Python code for CV extraction, structuring, evaluation, and local test scripts (`main.py`, `test_*.py`).
+* `modules/m1_CV/` contiene extracción de informes PDF, estructuración, evaluación y la interfaz Streamlit de M1.
 * `modules/m2_lrfmv/` contains the LRFMV customer segmentation work: `data/raw/`, notebooks, docs, `pyproject.toml`, and `uv.lock`.
 * `modules/m2_lrfmv/notebooks/` holds the ordered notebook pipeline: bronze EDA, silver feature engineering, and gold clustering.
 * Generated outputs should stay out of git. Use the ignored `outputs/` locations documented in `README.md`.
 
-## Módulo 1 — CV Screening y perfilamiento comercial
+## Módulo 1 — Perfilamiento desde informes internos
 
 Referencia principal:
 
 * `M1_SPEC.md`
 
-El Módulo 1 analiza CVs de candidatos a preventistas.
+El Módulo 1 analiza informes internos de desempeño de preventistas activos.
 
 No debe presentarse como un sistema automático de contratación.
 
 Debe enfocarse en:
 
 * extraer texto desde PDFs;
-* estructurar información del CV;
-* evaluar perfil comercial;
-* identificar el tipo de preventista;
-* generar explicación XAI;
-* producir una salida Gold útil para el Módulo 3.
+* estructurar métricas y evidencia del supervisor;
+* combinar 70 % métricas y 30 % narrativa mediante reglas Python;
+* identificar el perfil captación, fidelización o ejecución en campo;
+* generar una explicación XAI detallada sin delegar la decisión al LLM;
+* guardar en Gold únicamente perfiles finales útiles para el Módulo 3.
 
 El campo clave para conectar con Módulo 3 es:
 
 ```text
-salesperson_type
+perfil_comercial
 ```
 
 Valores permitidos:
 
 ```text
-Hunter
-Farmer
-Ejecutor
+captacion
+fidelizacion
+ejecucion_campo
 ```
 
-No usar:
-
-```text
-hire_cluster
-```
-
-Usar en su lugar:
-
-```text
-assignment_readiness
-```
-
-El Módulo 1 puede usar LLM para estructurar y evaluar CVs, pero la salida debe validarse con Pydantic v2.
+Los nombres visibles equivalentes son Hunter, Farmer y Ejecutor. M1 no calcula
+`score_total`, nivel de asignación ni elegibilidad para M3. Puede usar LLM para
+estructurar, evaluar narrativa y explicar, pero Python decide el perfil y toda
+salida del modelo se valida con Pydantic v2.
 
 ## Módulo 2 — LRFMV, segmentación y churn
 
@@ -178,13 +169,10 @@ El Módulo 3 debe usar:
 Desde Módulo 1:
 
 ```text
-candidate_id
-candidate_name
-score_total
-assignment_readiness
-salesperson_type
-salesperson_type_confidence
-rotation_risk_level
+employee_id
+employee_name
+zona_actual
+perfil_comercial
 ```
 
 Desde Módulo 2:
@@ -199,7 +187,7 @@ is_churn_risk
 La lógica principal es:
 
 ```text
-salesperson_type × cluster_label
+perfil_comercial × cluster_label
 ```
 
 Matriz conceptual:
@@ -353,9 +341,13 @@ M1 may expect environment variables such as:
 
 ```text
 SUPABASE_URL
-SUPABASE_KEY
+SUPABASE_SERVICE_ROLE_KEY
 GITHUB_TOKEN
+M1_LLM_MODEL
 ```
+
+M1 carga estas variables desde `modules/m1_CV/.env`; M2 usa
+`modules/m2_lrfmv/.env`. No guardar configuración de módulos en la raíz.
 
 Keep credentials local or in a secure secret manager.
 
