@@ -16,7 +16,9 @@ from main import (  # noqa: E402
     confirmar_perfil,
     enmascarar_dni,
     estructurar_evaluar_y_guardar,
+    get_supabase_client,
 )
+from services.matching_service import asignar_mejor_territorio  # noqa: E402
 
 
 PERFIL_LABELS = {
@@ -46,6 +48,39 @@ CAMPO_LABELS = {
 
 def mostrar_score(valor: float | None) -> str:
     return f"{float(valor):.2f}" if valor is not None else "Pendiente"
+
+
+def mostrar_asignacion_m3(supabase, employee_id: str) -> None:
+    """Muestra la asignación territorial una vez confirmado el perfil M1."""
+    st.subheader("Asignación territorial")
+    st.write(
+        "El sistema comparará las fortalezas del preventista "
+        "con los territorios que todavía están disponibles."
+    )
+
+    if st.button("Asignar mejor territorio disponible", type="primary"):
+        try:
+            with st.spinner("Calculando compatibilidad..."):
+                asignacion = asignar_mejor_territorio(
+                    supabase=supabase,
+                    employee_id=employee_id,
+                )
+
+            st.success("Territorio asignado correctamente")
+            col1, col2 = st.columns(2)
+
+            with col1:
+                st.metric("Territorio", asignacion["territory_code"])
+            with col2:
+                st.metric(
+                    "Compatibilidad",
+                    f'{asignacion["compatibility_score"]:.2f}',
+                )
+
+            st.write("**Método:**", asignacion["assignment_method"])
+            st.write("**Justificación:**", asignacion["assignment_rationale"])
+        except Exception as error:
+            st.error(f"No se pudo realizar la asignación: {error}")
 
 
 st.set_page_config(page_title="M1 - Perfil de preventistas", page_icon="📄")
@@ -220,3 +255,12 @@ if resultado:
     elif estado == "valid":
         perfil = evaluacion["perfil_comercial"]
         st.success(f"Perfil final: {PERFIL_LABELS[perfil]}")
+        resultado_gold = resultado.get("gold")
+        if resultado_gold:
+            supabase = get_supabase_client()
+            mostrar_asignacion_m3(
+                supabase=supabase,
+                employee_id=resultado_gold["employee_id"],
+            )
+        else:
+            st.warning("No se encontró la evaluación Gold para la asignación.")
