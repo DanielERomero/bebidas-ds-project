@@ -1,7 +1,8 @@
 import sys
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from types import SimpleNamespace
+from unittest.mock import MagicMock, patch
 
 MODULE_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(MODULE_DIR))
@@ -11,6 +12,21 @@ from main import detectar_dni, enmascarar_dni, extraer_texto_pdf  # noqa: E402
 
 
 class MainUtilitiesTest(unittest.TestCase):
+    def test_configuracion_prioriza_variable_de_entorno(self):
+        with patch.dict("main.os.environ", {"PRUEBA_CONFIG": "local"}, clear=True):
+            self.assertEqual(main.obtener_configuracion("PRUEBA_CONFIG"), "local")
+
+    def test_configuracion_usa_secrets_si_no_hay_entorno(self):
+        mock_get = MagicMock(return_value="cloud")
+        streamlit_simulado = SimpleNamespace(secrets=SimpleNamespace(get=mock_get))
+
+        with patch.dict("main.os.environ", {}, clear=True):
+            with patch.dict(sys.modules, {"streamlit": streamlit_simulado}):
+                valor = main.obtener_configuracion("PRUEBA_CONFIG")
+
+        self.assertEqual(valor, "cloud")
+        mock_get.assert_called_once_with("PRUEBA_CONFIG", None)
+
     def test_detects_labeled_dni(self):
         self.assertEqual(detectar_dni("DNI: 12345678"), "12345678")
 

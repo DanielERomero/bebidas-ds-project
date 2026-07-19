@@ -39,10 +39,27 @@ from rules import (
 MODULE_DIR = Path(__file__).resolve().parent
 load_dotenv(MODULE_DIR / ".env")
 
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_KEY")
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-MODELO_NUBE = os.getenv("M1_LLM_MODEL", "gpt-4o")
+
+def obtener_configuracion(nombre: str, default: str | None = None) -> str | None:
+    """Lee .env localmente y st.secrets cuando la app corre en Streamlit Cloud."""
+    valor_entorno = os.getenv(nombre)
+    if valor_entorno is not None:
+        return valor_entorno
+
+    try:
+        import streamlit as st
+
+        return st.secrets.get(nombre, default)
+    except FileNotFoundError:
+        return default
+
+
+SUPABASE_URL = obtener_configuracion("SUPABASE_URL")
+SUPABASE_KEY = obtener_configuracion(
+    "SUPABASE_SERVICE_ROLE_KEY"
+) or obtener_configuracion("SUPABASE_KEY")
+GITHUB_TOKEN = obtener_configuracion("GITHUB_TOKEN")
+MODELO_NUBE = obtener_configuracion("M1_LLM_MODEL", "gpt-4o")
 
 PERIODO_INICIO = date(2025, 1, 1)
 PERIODO_FIN = date(2025, 6, 30)
