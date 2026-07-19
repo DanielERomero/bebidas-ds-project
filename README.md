@@ -2,6 +2,22 @@
 
 Proyecto de ciencia de datos para segmentación y análisis de clientes de bebidas.
 
+## Estructura mínima
+
+```text
+project_bebidas/
+├── docs/              # Especificaciones compartidas
+├── modules/
+│   ├── m1_CV/         # Informes internos, LLM y Streamlit
+│   └── m2_lrfmv/      # Pipeline SQL, LRFMV y K-Means
+├── sql/               # Migraciones SQL de los módulos
+├── AGENTS.md
+└── README.md
+```
+
+Cada módulo administra su propio `pyproject.toml`, `uv.lock`, `.env` y `.venv`.
+No se crea un entorno Python en la raíz del repositorio.
+
 ## Como ejecutar el proyecto con uv
 
 ### 1. Clonar el repositorio
@@ -17,9 +33,12 @@ Si ya tienes el repositorio clonado, solo actualiza:
 git pull
 ```
 
-### 2. Ejecutar Modulo 1 - CV Screening y perfilamiento comercial
+### 2. Ejecutar Módulo 1 - Perfil comercial de preventistas
 
-El Modulo 1 analiza CVs de candidatos a preventistas B2B y valida las salidas del LLM con Pydantic v2.
+El Módulo 1 analiza informes internos de desempeño de preventistas activos. Usa
+dos llamadas LLM para estructurar y puntuar la evidencia narrativa, Python para
+aplicar las reglas 70/30 y una tercera llamada LLM para redactar una explicación
+detallada. Todas las respuestas del modelo se validan con Pydantic v2.
 
 Entrar al modulo:
 
@@ -33,46 +52,62 @@ Crear o sincronizar el entorno:
 uv sync
 ```
 
-Configurar credenciales en el archivo `.env` de la raiz del proyecto:
+Crear la configuración de M1 copiando su ejemplo local:
+
+```bash
+cp .env.example .env
+```
+
+El archivo `modules/m1_CV/.env` utiliza:
 
 ```env
 GITHUB_TOKEN=tu_token_de_github_models
 SUPABASE_URL=tu_url_de_supabase
-SUPABASE_KEY=tu_key_de_supabase
+SUPABASE_SERVICE_ROLE_KEY=tu_service_role_key
+M1_LLM_MODEL=gpt-4o
 ```
 
-Ejecutar pruebas locales de validacion de schemas, sin LLM ni Supabase:
+M2 mantiene una configuración independiente en `modules/m2_lrfmv/.env`, creada
+desde su propio `.env.example`. Ningún módulo carga el `.env` de la raíz.
+
+Ejecutar todas las pruebas locales, sin LLM ni Supabase reales:
 
 ```bash
-uv run python tests/test_schemas.py
+uv run python -m unittest discover -s tests -v
 ```
 
-Ejecutar prueba end-to-end local de evaluacion, con PDF y LLM, sin Supabase:
+Ejecutar una prueba manual end-to-end con PDF, LLM y Supabase configurados:
 
 ```bash
 uv run python test_evaluacion.py
 ```
 
-Esta prueba toma PDFs desde `tests/pdfs/` y guarda un JSON trazable en `tests/outputs/`.
+Esta prueba toma informes desde `tests/pdfs/`. Los datos incompletos quedan en
+Silver, los empates esperan una selección en Streamlit y solo los perfiles
+finales se escriben en Gold.
 
-Para probar el pipeline con un PDF local, coloca un CV de prueba en:
+Para probar el pipeline, coloca un informe interno ficticio en:
 
 ```text
-modules/m1_CV/tests/pdfs/cv_prueba.pdf
+modules/m1_CV/tests/pdfs/informe_preventista_prueba.pdf
 ```
 
-Y ejecuta:
+Para usar la interfaz ejecuta:
 
 ```bash
-uv run python main.py
+uv run streamlit run app.py
 ```
 
 Notas:
 
-- El archivo `.env` no debe subirse a git.
+- Los archivos `.env` de cada módulo no deben subirse a git.
 - Las pruebas de schema no requieren credenciales.
 - Los PDFs de prueba se guardan localmente en `tests/pdfs/` y no deben subirse a git.
-- M1 no genera carpetas locales Bronze, Silver ni Gold; Supabase persiste resultados y el computo ocurre en Python.
+- No uses PDFs con datos personales reales en las pruebas del repositorio.
+- M1 no genera carpetas locales Bronze, Silver ni Gold; Supabase persiste los
+  datos y Python aplica el cómputo.
+- Ejecuta `sql/08_create_m1_informe_medallion.sql` y luego
+  `sql/09_simplify_m1_perfil_comercial.sql` en ese orden.
 
 ### 3. Ejecutar Modulo 2 - LRFMV y segmentacion
 
@@ -92,37 +127,20 @@ uv sync
 
 Este comando crea el entorno virtual `.venv` y sincroniza las dependencias definidas en `pyproject.toml` y `uv.lock`.
 
-### 5. Usar el entorno en notebooks
+### Módulo 2 — flujo SQL Medallion
 
-Para abrir Jupyter desde el entorno de `uv`:
+1. Crear schemas en Supabase:
+   bronze, silver, gold
 
-```bash
-uv run jupyter notebook
-```
+2. Ejecutar scripts SQL desde /sql
 
-Si trabajas en VS Code, selecciona como kernel el entorno `.venv` creado dentro de:
+3. Cargar CSVs a bronze
 
-```text
-modules/m2_lrfmv/.venv
-```
+4. SQL calcula silver.client_lrfmv_features
 
-### 6. Ejecutar notebooks en orden
+5. Python lee Silver, ejecuta K-Means y escribe Gold
 
-Desde `modules/m2_lrfmv/notebooks`, ejecutar:
+6. Resultado final:
+   gold.clients_clustered
 
-```text
-01_eda_bronze.ipynb
-02_silver_clients_features_final.ipynb
-03_gold_clients_clustered.ipynb
-```
-
-## Salidas esperadas
-
-Al ejecutar los notebooks se generan archivos en:
-
-```text
-modules/m2_lrfmv/outputs/m2/eda
-modules/m2_lrfmv/outputs/m2/silver
-modules/m2_lrfmv/outputs/m2/gold
-modules/m2_lrfmv/outputs/m2/figures
 ```

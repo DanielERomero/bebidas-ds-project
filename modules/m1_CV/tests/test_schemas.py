@@ -1,5 +1,6 @@
 import sys
 import unittest
+from copy import deepcopy
 from pathlib import Path
 
 from pydantic import ValidationError
@@ -7,150 +8,194 @@ from pydantic import ValidationError
 MODULE_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(MODULE_DIR))
 
-from prompts import CVSchema, EvaluacionSchema  # noqa: E402
+from prompts import (  # noqa: E402
+    EvaluacionSupervisorSchema,
+    ExplicacionFinalSchema,
+    PerfilPreventistaSchema,
+    PeriodoEvaluacion,
+)
 
 
-def valid_cv_payload() -> dict:
+def valid_perfil_payload() -> dict:
     return {
-        "dni": "12345678",
-        "candidate_name": "Juan Perez",
-        "email": "juan@example.com",
-        "phone": "999999999",
-        "location": "Lima, Peru",
-        "summary_profile": "Preventista con experiencia en canal tradicional.",
-        "commercial_experience_years": 3,
-        "last_position": "Preventista",
-        "last_company": "Distribuidora Lima",
-        "education_level": "Tecnico",
-        "education_career": "Administracion",
-        "education_institution": "Instituto Comercial",
-        "field_sales_experience": "Visitas diarias a bodegas y minimarkets.",
-        "traditional_channel_experience": "Gestion de clientes en bodegas.",
-        "route_management_experience": "Cobertura de ruta asignada.",
-        "new_account_opening_experience": "Apertura de nuevos clientes.",
-        "client_retention_experience": "Seguimiento de cartera recurrente.",
-        "portfolio_management_experience": "Gestion de cartera de clientes.",
-        "collection_experience": "Cobranza preventiva.",
-        "daily_visits_experience": "25 visitas diarias.",
-        "sales_quota_experience": "Cumplimiento de cuota mensual.",
-        "point_of_sale_execution_experience": "Ejecucion en punto de venta.",
-        "commercial_tools": ["Excel", "app de pedidos"],
-        "sales_kpis_mentioned": ["cuota", "cobertura"],
-        "experience_detail": [
-            {
-                "company": "Distribuidora Lima",
-                "position": "Preventista",
-                "start": "2021",
-                "end": "2024",
-                "description": "Gestion de ruta y toma de pedidos.",
-            }
-        ],
-        "education_detail": [
-            {
-                "institution": "Instituto Comercial",
-                "career": "Administracion",
-                "start": "2018",
-                "end": "2020",
-            }
-        ],
-        "commercial_evidence": [
-            "visitas diarias a bodegas",
-            "cumplimiento de cuota mensual",
-        ],
+        "dni": "01234567",
+        "nombre_colaborador": "Ana Pérez",
+        "antiguedad_meses_empresa": 24,
+        "zona_actual": "Lima Norte",
+        "metricas_campo": {
+            "periodo_inicio": "2025-01-01",
+            "periodo_fin": "2025-06-30",
+            "periodo_meses": 6,
+            "cumplimiento_cuota_pct": 100,
+            "cobertura_ruta_pct": 95,
+            "meta_cobertura_ruta_pct": 95,
+            "retencion_cartera_pct": 90,
+            "meta_retencion_cartera_pct": 90,
+            "cuentas_nuevas_abiertas": 11,
+            "meta_cuentas_nuevas": 10,
+            "reportes_a_tiempo_pct": 100,
+            "meta_reportes_a_tiempo_pct": 100,
+        },
+        "evidencia_supervisor": {
+            "evidencia_captacion": ["Abrió once cuentas nuevas."],
+            "evidencia_fidelizacion": ["Realizó seguimiento semanal."],
+            "evidencia_cobertura_ruta": ["Cumplió las visitas programadas."],
+            "evidencia_disciplina_comunicacion": [
+                "Entregó reportes y comunicó incidencias."
+            ],
+            "fortalezas_reportadas": ["Constancia comercial."],
+            "aspectos_mejora_reportados": [
+                "Mejorar el registro de incidencias."
+            ],
+        },
     }
 
 
-def valid_evaluation_payload() -> dict:
+def valid_evaluacion_payload() -> dict:
     return {
-        "score_commercial_experience": 82,
-        "score_traditional_channel": 80,
-        "score_prospecting": 70,
-        "score_retention": 75,
-        "score_route_coverage": 85,
-        "score_discipline_communication": 78,
-        "score_fit_preventista": 84,
-        "score_total": 80,
-        "assignment_readiness": "apto_operativo",
-        "salesperson_type": "Ejecutor",
-        "salesperson_type_confidence": 0.82,
-        "commercial_seniority": "semi_senior",
-        "rotation_risk_level": "bajo",
-        "recommended_assignment": "Plata",
-        "requires_human_review": False,
-        "xai_explanation": (
-            "El candidato muestra experiencia en ruta, visitas diarias y toma de pedidos. "
-            "Se clasifica como Ejecutor porque la evidencia principal esta en cobertura operativa."
-        ),
-        "strengths": ["Experiencia de ruta"],
-        "gaps": ["Menor evidencia de cuentas Diamante"],
-        "risks": ["Podria requerir acompanamiento en negociacion compleja"],
-        "raw_llm_evaluation": "Evaluacion basada en evidencia comercial del CV.",
+        "score_supervisor_captacion": 100,
+        "score_supervisor_fidelizacion": 50,
+        "score_supervisor_cobertura_ruta": 50,
+        "score_supervisor_disciplina_comunicacion": 50,
     }
 
 
-class SchemaValidationTest(unittest.TestCase):
-    def test_cv_schema_accepts_valid_commercial_payload(self):
-        validated = CVSchema.model_validate(valid_cv_payload())
+class PerfilPreventistaSchemaTest(unittest.TestCase):
+    def test_accepts_valid_internal_report(self):
+        validated = PerfilPreventistaSchema.model_validate(valid_perfil_payload())
 
-        self.assertEqual(validated.candidate_name, "Juan Perez")
-        self.assertEqual(validated.dni, "12345678")
-        self.assertEqual(validated.commercial_tools, ["Excel", "app de pedidos"])
-        self.assertEqual(validated.experience_detail[0].position, "Preventista")
+        self.assertEqual(validated.dni, "01234567")
+        self.assertEqual(validated.metricas_campo.periodo_meses, 6)
+        self.assertEqual(
+            validated.evidencia_supervisor.evidencia_captacion,
+            ["Abrió once cuentas nuevas."],
+        )
 
-    def test_cv_schema_requires_dni(self):
-        payload = valid_cv_payload()
-        payload.pop("dni")
+    def test_requires_valid_eight_digit_dni(self):
+        for dni in [None, "1234567", "123456789", "ABC45678", ""]:
+            with self.subTest(dni=dni), self.assertRaises(ValidationError):
+                payload = valid_perfil_payload()
+                if dni is None:
+                    payload.pop("dni")
+                else:
+                    payload["dni"] = dni
+                PerfilPreventistaSchema.model_validate(payload)
 
-        with self.assertRaises(ValidationError):
-            CVSchema.model_validate(payload)
+    def test_allows_missing_administrative_data_for_correction_in_silver(self):
+        payload = valid_perfil_payload()
+        payload["nombre_colaborador"] = None
+        payload["antiguedad_meses_empresa"] = None
+        payload["zona_actual"] = None
 
-    def test_cv_schema_rejects_invalid_dni_format(self):
-        invalid_dnis = ["1234567", "123456789", "ABC45678", ""]
+        validated = PerfilPreventistaSchema.model_validate(payload)
 
-        for dni in invalid_dnis:
-            with self.subTest(dni=dni):
-                payload = valid_cv_payload()
-                payload["dni"] = dni
+        self.assertIsNone(validated.nombre_colaborador)
+        self.assertIsNone(validated.antiguedad_meses_empresa)
+        self.assertIsNone(validated.zona_actual)
 
-                with self.assertRaises(ValidationError):
-                    CVSchema.model_validate(payload)
-
-    def test_cv_schema_rejects_invalid_nested_list_item(self):
-        payload = valid_cv_payload()
-        payload["experience_detail"] = ["texto plano invalido"]
-
-        with self.assertRaises(ValidationError):
-            CVSchema.model_validate(payload)
-
-    def test_evaluation_schema_accepts_valid_commercial_payload(self):
-        validated = EvaluacionSchema.model_validate(valid_evaluation_payload())
-
-        self.assertEqual(validated.salesperson_type, "Ejecutor")
-        self.assertEqual(validated.salesperson_type_confidence, 0.82)
-        self.assertEqual(validated.assignment_readiness, "apto_operativo")
-
-    def test_evaluation_schema_rejects_invalid_catalogs_and_ranges(self):
-        invalid_cases = [
-            ("salesperson_type", "hire_cluster"),
-            ("assignment_readiness", "contratar"),
-            ("score_total", 101),
-            ("salesperson_type_confidence", 1.5),
+    def test_requires_complete_and_ordered_period(self):
+        invalid_periods = [
+            {"periodo_inicio": "2025-07-01"},
+            {"periodo_fin": "2024-12-31"},
+            {"periodo_meses": 0},
+            {"periodo_meses": 25},
         ]
+        for changes in invalid_periods:
+            with self.subTest(changes=changes), self.assertRaises(ValidationError):
+                payload = valid_perfil_payload()
+                payload["metricas_campo"].update(changes)
+                PerfilPreventistaSchema.model_validate(payload)
 
+        for missing_field in ("periodo_inicio", "periodo_fin", "periodo_meses"):
+            with self.subTest(missing=missing_field), self.assertRaises(
+                ValidationError
+            ):
+                payload = valid_perfil_payload()
+                payload["metricas_campo"].pop(missing_field)
+                PerfilPreventistaSchema.model_validate(payload)
+
+    def test_rejects_metric_outside_allowed_range(self):
+        invalid_cases = [
+            ("cumplimiento_cuota_pct", 201),
+            ("cobertura_ruta_pct", 101),
+            ("retencion_cartera_pct", -1),
+            ("meta_cuentas_nuevas", 0),
+            ("reportes_a_tiempo_pct", 101),
+        ]
         for field, value in invalid_cases:
-            with self.subTest(field=field, value=value):
-                payload = valid_evaluation_payload()
-                payload[field] = value
+            with self.subTest(field=field), self.assertRaises(ValidationError):
+                payload = valid_perfil_payload()
+                payload["metricas_campo"][field] = value
+                PerfilPreventistaSchema.model_validate(payload)
 
-                with self.assertRaises(ValidationError):
-                    EvaluacionSchema.model_validate(payload)
-
-    def test_evaluation_schema_requires_xai_explanation(self):
-        payload = valid_evaluation_payload()
-        payload.pop("xai_explanation")
-
+    def test_rejects_unexpected_fields_and_empty_evidence(self):
+        payload = valid_perfil_payload()
+        payload["campo_inventado"] = True
         with self.assertRaises(ValidationError):
-            EvaluacionSchema.model_validate(payload)
+            PerfilPreventistaSchema.model_validate(payload)
+
+        payload = valid_perfil_payload()
+        payload["evidencia_supervisor"]["evidencia_captacion"] = [""]
+        with self.assertRaises(ValidationError):
+            PerfilPreventistaSchema.model_validate(payload)
+
+
+class EvaluacionSupervisorSchemaTest(unittest.TestCase):
+    def test_accepts_closed_score_catalog(self):
+        for score in (0, 25, 50, 75, 100):
+            with self.subTest(score=score):
+                payload = valid_evaluacion_payload()
+                payload["score_supervisor_captacion"] = score
+                validated = EvaluacionSupervisorSchema.model_validate(payload)
+                self.assertEqual(validated.score_supervisor_captacion, score)
+
+    def test_rejects_scores_outside_catalog(self):
+        for score in (-1, 10, 70, 101):
+            with self.subTest(score=score), self.assertRaises(ValidationError):
+                payload = valid_evaluacion_payload()
+                payload["score_supervisor_captacion"] = score
+                EvaluacionSupervisorSchema.model_validate(payload)
+
+    def test_rejects_unexpected_evaluation_fields(self):
+        payload = deepcopy(valid_evaluacion_payload())
+        payload["score_total"] = 90
+        with self.assertRaises(ValidationError):
+            EvaluacionSupervisorSchema.model_validate(payload)
+
+
+class ExplicacionFinalSchemaTest(unittest.TestCase):
+    def test_accepts_detailed_explanation_up_to_1200_characters(self):
+        validated = ExplicacionFinalSchema.model_validate(
+            {"explicacion_final": "x" * 1200}
+        )
+        self.assertEqual(len(validated.explicacion_final), 1200)
+
+    def test_rejects_explanation_over_1200_characters(self):
+        with self.assertRaises(ValidationError):
+            ExplicacionFinalSchema.model_validate(
+                {"explicacion_final": "x" * 1201}
+            )
+
+    def test_rejects_decision_fields_from_explanation_llm(self):
+        with self.assertRaises(ValidationError):
+            ExplicacionFinalSchema.model_validate(
+                {
+                    "explicacion_final": "Comparación detallada.",
+                    "perfil_comercial": "captacion",
+                }
+            )
+
+
+class PeriodoEvaluacionTest(unittest.TestCase):
+    def test_accepts_streamlit_period_metadata(self):
+        periodo = PeriodoEvaluacion.model_validate(
+            {
+                "periodo_inicio": "2025-01-01",
+                "periodo_fin": "2025-06-30",
+                "periodo_meses": 6,
+            }
+        )
+        self.assertEqual(periodo.periodo_meses, 6)
 
 
 if __name__ == "__main__":
